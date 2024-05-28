@@ -305,12 +305,10 @@ public class Grafo {
         aristas.clear();
     }
 
-	public ArrayList<Nodo> getindiceConVecinos() {
+	public ArrayList<Nodo> obtenerindiceConVecinos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 
 

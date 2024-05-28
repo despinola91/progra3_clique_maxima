@@ -12,7 +12,7 @@ public class Clique {
 		this._peso = 0;
 	}
 
-	public void agregarNodoAClique(Nodo nodo, Grafo grafo) {
+	public void agregarNodoAClique(Nodo nodo, Grafo grafo, Arista arista) {  //falta agregar peso arista?
 		if (!_listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
 			_listaNodo.add(nodo);
 			this._peso = (this.obtenerPeso() + nodo.obtenerPeso());
@@ -22,27 +22,27 @@ public class Clique {
 	private boolean esVecinodeTodos(Nodo nodo, Grafo grafo) {
 		boolean ret = true;
 		for (Nodo iteracion : _listaNodo) {
-			ret = ret && grafo.getindiceConVecinos().get(iteracion.getIndiceNodo()).contains(nodo);
+			ret = ret && grafo.obtenerindiceConVecinos().get(iteracion.obtenerIndiceNodo()).contains(nodo);
 		}
 		return ret;
 	}
 
 	public Clique cliqueConMasPeso(Clique otra) {
-		if (this._peso > otra.getPeso()) {
+		if (this._peso > otra.obtenerPeso()) {
 			return this;
 		}
 		return otra;
 	}
 
-	public ArrayList<Nodo> getListaNodo() {
+	public ArrayList<Nodo> obtenerListaNodo() {
 		return _listaNodo;
 	}
 
-	public int getPeso() {
+	public int obtenerPeso() {
 		return _peso;
 	}
 
-	public int getGrado() {
+	public int obtenerGrado() {
 		return this._listaNodo.size();
 	}
 

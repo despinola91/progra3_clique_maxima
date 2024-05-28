@@ -10,6 +10,7 @@ public class Nodo {
     private int id;
     private String nombre;
     private Coordinate coordenadas;
+    private Arista arista;
     
     public Nodo(int id, String nombre, Coordinate coordenadas) {
         this.id = id;
@@ -34,15 +35,19 @@ public class Nodo {
 		return null;
 	}
 
-	public Object obtenerPeso(Arista arista) {
-		arista.obtenerPeso();
+	public Object obtenerPeso(Nodo nodo1, Nodo nodo2) {
+		arista.obtenerPeso();  //agregar en arista
 		return null;
 	}
 
-	public Object getIndiceNodo() {
+	public int obtenerIndiceNodo() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return id;
 	}
+
+
+
 
 
 
