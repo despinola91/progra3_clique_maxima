@@ -27,10 +27,10 @@ public class Arista implements Comparable<Arista> {
         return peso;
     }
 
-    public static Arista obtenerArista(ArrayList<Arista> relaciones, Nodo nodoA, Nodo nodoB) {
-        ArrayList<Nodo> provincias = new ArrayList<>();
-        provincias.add(nodoA);
-        provincias.add(nodoB);
+    public static Arista obtenerArista(ArrayList<Arista> aristas, Nodo nodoA, Nodo nodoB) {
+        ArrayList<Nodo> nodos = new ArrayList<>();
+        nodos.add(nodoA);
+        nodos.add(nodoB);
 
         for (Arista arista : aristas) {
 

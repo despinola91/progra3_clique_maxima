@@ -29,7 +29,7 @@ public class Nodo {
         return coordenadas;
     }
 
-	public Object getCantidadVecinos() {
+	public Object obtenerCantidadVecinos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
