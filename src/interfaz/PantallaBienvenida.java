@@ -96,7 +96,7 @@ public class PantallaBienvenida {
 
 	protected void mostrarPantallaMapa() { // Crea la nueva ventana, la hace visible y cierra la primera
 		MainForm frame2 = new MainForm();
-		frame2.frmProvinciasArgentinas.setVisible(true);
+		frame2.frmNodosGolosos.setVisible(true);
 		getFrame().dispose();
 	}
 

@@ -38,9 +38,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class MainForm 
 {
-	public JFrame frmProvinciasArgentinas;
+	public JFrame frmNodosGolosos;
 
-	private JPanel panelMapa;
+	private JPanel panelgrafo;
 	private JPanel panelControlRelaciones;
 	private JPanel panelControlRegiones;
 
@@ -52,10 +52,10 @@ public class MainForm
 	private JTextPane textSimilitud;
 	private JTextPane textCantidadRegiones;
 
-	private JMapViewer _mapa;
+	private JMapViewer _grafo;
 	private JLabel lblBandera;
 	
-	private Grafo mapa;
+	private Grafo grafo;
 
 	private JButton btnCrearRelacion;
 	private JButton btnEliminarRelacion;
@@ -70,7 +70,7 @@ public class MainForm
 			public void run() {
 				try {
 					MainForm window = new MainForm();
-					window.frmProvinciasArgentinas.setVisible(true);
+					window.frmNodosGolosos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -91,41 +91,41 @@ public class MainForm
 	 */
 	private void initialize() 
 	{
-		frmProvinciasArgentinas = new JFrame();
-		frmProvinciasArgentinas.setResizable(false);
-		frmProvinciasArgentinas.setTitle("Clique Maxima");
-		frmProvinciasArgentinas.setBounds(200, 25, 792, 575);
-		frmProvinciasArgentinas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmProvinciasArgentinas.getContentPane().setLayout(null);
+		frmNodosGolosos = new JFrame();
+		frmNodosGolosos.setResizable(false);
+		frmNodosGolosos.setTitle("Clique Maxima");
+		frmNodosGolosos.setBounds(200, 25, 792, 575);
+		frmNodosGolosos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmNodosGolosos.getContentPane().setLayout(null);
 		
-		panelMapa = new JPanel();
-		panelMapa.setBounds(8, 10, 437, 512);
-		frmProvinciasArgentinas.getContentPane().add(panelMapa);
+		panelgrafo = new JPanel();
+		panelgrafo.setBounds(8, 10, 437, 512);
+		frmNodosGolosos.getContentPane().add(panelgrafo);
 		
 		panelControlRelaciones = new JPanel();
 		panelControlRelaciones.setToolTipText("");
 		panelControlRelaciones.setBounds(457, 11, 297, 251);
-		frmProvinciasArgentinas.getContentPane().add(panelControlRelaciones);		
+		frmNodosGolosos.getContentPane().add(panelControlRelaciones);		
 		panelControlRelaciones.setLayout(null);
 		
-		_mapa = new JMapViewer();
-		_mapa.setCenter(new Point(1075, 700));
-		_mapa.setDisplayPosition(new Coordinate(-41,-63), 4);
-		_mapa.setPreferredSize(new Dimension(437, 512));
+		_grafo = new JMapViewer();
+		_grafo.setCenter(new Point(1075, 700));
+		_grafo.setDisplayPosition(new Coordinate(-41.362952, -33.382671), 4);
+		_grafo.setPreferredSize(new Dimension(437, 512));
 				
-		panelMapa.add(_mapa);
+		panelgrafo.add(_grafo);
 		
 		panelControlRegiones = new JPanel();
 		panelControlRegiones.setBounds(455, 273, 299, 249);
-		frmProvinciasArgentinas.getContentPane().add(panelControlRegiones);
+		frmNodosGolosos.getContentPane().add(panelControlRegiones);
 		panelControlRegiones.setLayout(null);
 		
 		lblBandera = new JLabel("");
-		lblBandera.setIcon(new ImageIcon("fondoBandera.png"));
+		lblBandera.setIcon(new ImageIcon("fondo.jpg"));
 		lblBandera.setBounds(8, 0, 773, 536);
-		frmProvinciasArgentinas.getContentPane().add(lblBandera);
+		frmNodosGolosos.getContentPane().add(lblBandera);
 		
-		mapa = new Grafo();
+		grafo = new Grafo();
 
 		detectarCoordenadas();	
 		cargarRelaciones();
@@ -136,25 +136,25 @@ public class MainForm
 	
 	private void detectarCoordenadas() 
 	{	
-		_mapa.addMouseListener(new MouseAdapter() 
+		_grafo.addMouseListener(new MouseAdapter() 
 		{
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
 			if (e.getButton() == MouseEvent.BUTTON1)
 			{
-				Coordinate coordenadas = (Coordinate)_mapa.getPosition(e.getPoint());
+				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
 				String nombre = JOptionPane.showInputDialog("Nombre provincia: ");
 
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
-						mapa.agregarProvincia(nombre, coordenadas);
-						_mapa.addMapMarker(new MapMarkerDot(nombre, coordenadas));
+						grafo.agregarNodo(nombre, coordenadas);
+						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
-					cargarDesplegablesProvincias();
+					cargarDesplegablesNodos();
 				}
 			}}
 		});
@@ -169,7 +169,7 @@ public class MainForm
 	    listaCoordenadas.add(coordenadaProv1);
 	    
 		MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
-	    _mapa.addMapPolygon(relacion);
+	    _grafo.addMapPolygon(relacion);
 	}
 	
 	private void dibujarAristaRegiones(Coordinate coordenadaProv1, Coordinate coordenadaProv2, Color color) {
@@ -181,7 +181,7 @@ public class MainForm
 	    
 	    MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
 	    relacion.setColor(color);
-	    _mapa.addMapPolygon(relacion);
+	    _grafo.addMapPolygon(relacion);
 	}
 	
 	private void dividirRegiones() {
@@ -207,8 +207,7 @@ public class MainForm
 	    comboBox_Algoritmo.setToolTipText("");
 	    comboBox_Algoritmo.setBounds(133, 97, 138, 22);
 	    panelControlRegiones.add(comboBox_Algoritmo);
-	    comboBox_Algoritmo.addItem("Prim");
-	    comboBox_Algoritmo.addItem("Kruskal");
+
 	    
 	    
 		JButton btnCrearRegiones = new JButton("Crear Regiones");
@@ -217,22 +216,19 @@ public class MainForm
 		        String input = textCantidadRegiones.getText();
 		        try {
 		            int numRegiones = Integer.parseInt(input);
-		            if (numRegiones > 0 && numRegiones <= mapa.obtenerDimensionMatrizRelacion()) {
+		            if (numRegiones > 0 && numRegiones <= grafo.obtenerDimensionMatrizArista()) {
 		                System.out.println("Numero de regiones: " + numRegiones);
 		                String algoritmo = (String) comboBox_Algoritmo.getSelectedItem();
 		                
-		                if (mapa.esMapaConexo(mapa.obtenerMatrizRelacion())) {
-		                	mapa.generarRegiones(numRegiones, algoritmo);
-		                	dibujarRegiones(mapa.obtenerMatrizRegiones());
-		                	mostrarRelaciones(true);
-
-							btnCrearRelacion.setEnabled(false);
-							btnEliminarRelacion.setEnabled(false);
+		                if (grafo.esGrafoConexo(grafo.obtenerMatrizArista())) {
+		                
+		                	
+		                	
 		                }else {
-							JOptionPane.showMessageDialog(null, "Todas las provincias deben tener al menos una similitud cargada (Grafo inconexo!)", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Todas los Nodos deben tener al menos una similitud cargada (Grafo inconexo!)", "Error", JOptionPane.ERROR_MESSAGE);
 						}
 		            } else {
-		                JOptionPane.showMessageDialog(null, "La cantidad de regiones debe ser entre 1 y la cantidad de provincias creadas.", "Error", JOptionPane.ERROR_MESSAGE);
+		                JOptionPane.showMessageDialog(null, "La cantidad de regiones debe ser entre 1 y la cantidad de Nodos creadas.", "Error", JOptionPane.ERROR_MESSAGE);
 		            }
 		        } catch (NumberFormatException ex) {
 		            JOptionPane.showMessageDialog(null, "Debe ingresar un numero entero.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -242,7 +238,7 @@ public class MainForm
 		btnCrearRegiones.setBounds(25, 149, 136, 23);
 		panelControlRegiones.add(btnCrearRegiones);
 		
-				btnReset = new JButton("Reiniciar Mapa");
+				btnReset = new JButton("Reiniciar grafo");
 				btnReset.setBounds(68, 216, 190, 23);
 				panelControlRegiones.add(btnReset);
 	}
@@ -277,19 +273,19 @@ public class MainForm
 	    btnCrearRelacion = new JButton("Crear Relacion");
 		btnCrearRelacion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            String nombreProvincia1 = comboBox_Provincia1.getSelectedItem().toString();	            
-	            String nombreProvincia2 = comboBox_Provincia2.getSelectedItem().toString();
+	            String nombreNodo1 = comboBox_Provincia1.getSelectedItem().toString();	            
+	            String nombreNodo2 = comboBox_Provincia2.getSelectedItem().toString();
 				
 	            String similitudText = textSimilitud.getText();
 	            try {
-	                int similitud = Integer.parseInt(similitudText);
-	                if (similitud > 0) {
-	                    if (!nombreProvincia1.equals(nombreProvincia2)) {
-	                        mapa.agregarRelacion(nombreProvincia1, nombreProvincia2, similitud);
-							dibujarMapa(mapa.obtenerMatrizRelacion());
+	                int peso = Integer.parseInt(similitudText);
+	                if (peso > 0) {
+	                    if (!nombreNodo1.equals(nombreNodo2)) {
+	                        grafo.agregarArista(nombreNodo1, nombreNodo2, peso);
+							dibujargrafo(grafo.obtenerMatrizArista());
 							mostrarRelaciones(false);
 	                    } else {
-	                        JOptionPane.showMessageDialog(null, "Las dos provincias seleccionadas son iguales, por favor seleccione provincias diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
+	                        JOptionPane.showMessageDialog(null, "Las dos Nodos seleccionadas son iguales, por favor seleccione Nodos diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
 	                    }
 	                } else {
 	                    JOptionPane.showMessageDialog(null, "Debe ingresar un numero entero mayor a 0", "Error", JOptionPane.ERROR_MESSAGE);
@@ -311,8 +307,8 @@ public class MainForm
 	            String nombreProvincia1 = comboBox_Provincia1.getSelectedItem().toString();            
 	            String nombreProvincia2 = comboBox_Provincia2.getSelectedItem().toString();
 	            
-	            mapa.eliminarRelacion(nombreProvincia1, nombreProvincia2);
-				dibujarMapa(mapa.obtenerMatrizRelacion());
+	            grafo.eliminarArista(nombreProvincia1, nombreProvincia2);
+				dibujargrafo(grafo.obtenerMatrizArista());
 				mostrarRelaciones(false);
 	        }
 	    });
@@ -325,24 +321,24 @@ public class MainForm
 	    panelControlRelaciones.add(lblTituloRelaciones);
 	}
 
-	private void dibujarMapa(int[][] matrizDeRelacion) {
+	private void dibujargrafo(int[][] matrizDeRelacion) {
 
-		_mapa.removeAllMapPolygons();
+		_grafo.removeAllMapPolygons();
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarArista(mapa.obtenerNodoPorId(i).obtenerCoordenadas(), mapa.obtenerNodoPorId(j).obtenerCoordenadas());
+					dibujarArista(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas());
 				}
 			}
 		}
 	}
 
 	private void dibujarRegiones(int[][] matrizDeRelacion) {
-		_mapa.removeAllMapPolygons();
+		_grafo.removeAllMapPolygons();
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarAristaRegiones(mapa.obtenerNodoPorId(i).obtenerCoordenadas(), mapa.obtenerNodoPorId(j).obtenerCoordenadas(), Color.RED);
+					dibujarAristaRegiones(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas(), Color.RED);
 				}
 			}
 		}
@@ -353,18 +349,18 @@ public class MainForm
 	    String[] columnas = {"Origen", "Destino", "Similaridad"};
 	    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 	    
-		ArrayList<Arista> relaciones = new ArrayList<Arista>();
+		ArrayList<Arista> aristas = new ArrayList<Arista>();
 		if(soloRegiones) {
-			relaciones = mapa.obtenerAristaRegiones();
+			aristas = grafo.obtenerAristasRegiones();
 		}
 		else {
-			relaciones = mapa.obtenerAristas();
+			aristas = grafo.obtenerAristas();
 		}
 
 	    for (Arista arista : aristas) {
 	        Nodo nodoA = arista.obtenerNodos().get(0);
 	        Nodo nodoB = arista.obtenerNodos().get(1);
-	        int similitud = arista.obtenerPeso();
+	        int peso = arista.obtenerPeso();
 	        Object[] fila = {nodoA.obtenerNombre(), nodoB.obtenerNombre(), peso};
 	        modelo.addRow(fila);
 	    }
@@ -373,11 +369,11 @@ public class MainForm
 	private void reset() {   
 	    btnReset.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent arg0) {
-	            _mapa.removeAllMapMarkers();
-	            _mapa.removeAllMapPolygons();
-	            mapa.reiniciarMapa();
+	            _grafo.removeAllMapMarkers();
+	            _grafo.removeAllMapPolygons();
+	            grafo.reiniciarGrafo();
 	      
-				cargarDesplegablesProvincias();
+				cargarDesplegablesNodos();
 
 				btnCrearRelacion.setEnabled(true);
 				btnEliminarRelacion.setEnabled(true);
@@ -387,8 +383,8 @@ public class MainForm
 	    });
 	}
 
-	private void cargarDesplegablesProvincias() {
-		comboBox_Provincia1.setModel(new DefaultComboBoxModel<>(mapa.obtenerProvincias().toArray(new String[0])));
-		comboBox_Provincia2.setModel(new DefaultComboBoxModel<>(mapa.obtenerProvincias().toArray(new String[0])));
+	private void cargarDesplegablesNodos() {
+		comboBox_Provincia1.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
+		comboBox_Provincia2.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
 	}	
 }

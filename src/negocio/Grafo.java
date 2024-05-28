@@ -259,7 +259,7 @@ public class Grafo {
      * @param matriz
      * @return booleano indicando si el mapa es conexo o no.
      */
-    public boolean esMapaConexo(int[][] matriz) {
+    public boolean esGrafoConexo(int[][] matriz) {
         
         return BFS.grafoEsConexo(matriz);
     }
@@ -297,7 +297,7 @@ public class Grafo {
     /**
      * Reinicia el mapa.
      */
-    public void reiniciarMapa() {
+    public void reiniciarGrafo() {
 
         matrizDeArista = new int[0][0];
         matrizDeRegiones = new int[0][0];
@@ -309,5 +309,9 @@ public class Grafo {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }
