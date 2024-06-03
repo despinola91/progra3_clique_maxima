@@ -1,8 +1,10 @@
-package negocio;
+package modelo;
 
 import java.util.Comparator;
 
-public class ComparadorPorBeneficio implements Comparator<Objeto>
+import controlador.Objeto;
+
+public class ComparadorPorVecinos implements Comparator<Objeto>
 {
 	@Override
 	public int compare(Objeto uno, Objeto otro)

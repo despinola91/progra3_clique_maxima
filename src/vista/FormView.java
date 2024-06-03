@@ -1,4 +1,4 @@
-package interfaz;
+package vista;
 
 import java.awt.EventQueue;
 
@@ -11,9 +11,9 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
-import negocio.Grafo;
-import negocio.Nodo;
-import negocio.Arista;
+import controlador.Arista;
+import controlador.Grafo;
+import controlador.Nodo;
 
 import javax.swing.JButton;
 
@@ -37,7 +37,7 @@ import javax.swing.JCheckBox;
 
 
 
-public class MainForm 
+public class FormView 
 {
 	public JFrame frmNodosGolosos;
 
@@ -68,7 +68,7 @@ public class MainForm
 		{
 			public void run() {
 				try {
-					MainForm window = new MainForm();
+					FormView window = new FormView();
 					window.frmNodosGolosos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,7 +80,7 @@ public class MainForm
 	/**
 	 * Create the application.
 	 */
-	public MainForm() 
+	public FormView() 
 	{
 		initialize();
 	}

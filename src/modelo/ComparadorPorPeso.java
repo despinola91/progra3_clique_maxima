@@ -1,6 +1,8 @@
-package negocio;
+package modelo;
 
 import java.util.Comparator;
+
+import controlador.Objeto;
 
 public class ComparadorPorPeso implements Comparator<Objeto>
 {

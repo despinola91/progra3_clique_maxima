@@ -1,4 +1,4 @@
-package interfaz;
+package vista;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -95,7 +95,7 @@ public class PantallaBienvenida {
 	}
 
 	protected void mostrarPantallaMapa() { // Crea la nueva ventana, la hace visible y cierra la primera
-		MainForm frame2 = new MainForm();
+		FormView frame2 = new FormView();
 		frame2.frmNodosGolosos.setVisible(true);
 		getFrame().dispose();
 	}
