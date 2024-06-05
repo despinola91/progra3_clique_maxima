@@ -5,26 +5,26 @@ import java.util.ArrayList;
 public class Arista implements Comparable<Arista> {
     
     ArrayList<Nodo> nodos = new ArrayList<>();
-    int peso;
+    int relacion;
 
 
     @Override
     public int compareTo(Arista otra) {
-        return otra.obtenerPeso() - this.peso; // Orden descendente por similitud
+        return otra.obtenerRelacion() - this.relacion; // Orden descendente por similitud
     }
 
-    public Arista(Nodo nodoA, Nodo nodoB, int peso) {
+    public Arista(Nodo nodoA, Nodo nodoB, int relacion) {
         this.nodos.add(nodoA);
         this.nodos.add(nodoB);
-        this.peso = peso;
+        this.relacion = relacion;
     }
 
     public ArrayList<Nodo> obtenerNodos() {
         return this.nodos;
     }
 
-    public int obtenerPeso() {
-        return peso;
+    public int obtenerRelacion() {
+        return relacion;
     }
 
     public static Arista obtenerArista(ArrayList<Arista> aristas, Nodo nodoA, Nodo nodoB) {

@@ -49,7 +49,7 @@ public class MainForm
 	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
 	
-	private JTextPane textPeso1;
+	private JTextPane textSimilitud;
 	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
@@ -148,7 +148,7 @@ public class MainForm
 
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
-						grafo.agregarNodo(nombre, coordenadas);
+						grafo.agregarNodo(nombre, coordenadas);  //falta agregar el peso
 						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -247,27 +247,27 @@ public class MainForm
 	    
 	    comboBox_Nodo1 = new JComboBox();
 	    comboBox_Nodo1.setToolTipText("Nodo");
-	    comboBox_Nodo1.setBounds(77, 44, 119, 22);
+	    comboBox_Nodo1.setBounds(77, 69, 119, 22);
 	    panelControlRelaciones.add(comboBox_Nodo1);
 	    
 	    comboBox_Nodo2 = new JComboBox();
-	    comboBox_Nodo2.setBounds(77, 80, 119, 22);
+	    comboBox_Nodo2.setBounds(77, 105, 119, 22);
 	    panelControlRelaciones.add(comboBox_Nodo2);
 	    
-	    textPeso1 = new JTextPane();
-	    textPeso1.setBounds(227, 44, 62, 22);
-	    panelControlRelaciones.add(textPeso1);
+	    textSimilitud = new JTextPane();
+	    textSimilitud.setBounds(87, 138, 62, 22);
+	    panelControlRelaciones.add(textSimilitud);
 	    
 	    JLabel lblNodo1 = new JLabel("Nodo 1");
-	    lblNodo1.setBounds(25, 44, 77, 23);
+	    lblNodo1.setBounds(25, 69, 77, 23);
 	    panelControlRelaciones.add(lblNodo1);
 	    
 	    JLabel lblNodo2 = new JLabel("Nodo 2");
-	    lblNodo2.setBounds(25, 80, 77, 23);
+	    lblNodo2.setBounds(25, 105, 77, 23);
 	    panelControlRelaciones.add(lblNodo2);
 	    
 	    JLabel lblPeso = new JLabel("Peso");
-	    lblPeso.setBounds(228, 13, 77, 23);
+	    lblPeso.setBounds(228, 38, 77, 23);
 	    panelControlRelaciones.add(lblPeso);
 	    
 	    btnCrearRelacion = new JButton("Crear Relacion");
@@ -276,7 +276,7 @@ public class MainForm
 	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();	            
 	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
 				
-	            String similitudText = textPeso1.getText();
+	            String similitudText = textSimilitud.getText();
 	            try {
 	                int peso = Integer.parseInt(similitudText);  //cambiar a double
 	                if (peso > 0) {
@@ -317,12 +317,20 @@ public class MainForm
 	    
 	    JLabel lblTituloRelaciones = new JLabel("Creacion de relaciones");
 	    lblTituloRelaciones.setFont(new Font("Tahoma", Font.ITALIC, 16));
-	    lblTituloRelaciones.setBounds(25, 11, 208, 22);
+	    lblTituloRelaciones.setBounds(25, 12, 208, 22);
 	    panelControlRelaciones.add(lblTituloRelaciones);
 	    
 	    JTextPane textPeso2 = new JTextPane();
-	    textPeso2.setBounds(227, 80, 62, 22);
+	    textPeso2.setBounds(227, 105, 62, 22);
 	    panelControlRelaciones.add(textPeso2);
+	    
+	    JTextPane textPeso2_1 = new JTextPane();
+	    textPeso2_1.setBounds(227, 69, 62, 22);
+	    panelControlRelaciones.add(textPeso2_1);
+	    
+	    JLabel lblRelacin = new JLabel("Relación");
+	    lblRelacin.setBounds(25, 137, 53, 23);
+	    panelControlRelaciones.add(lblRelacin);
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
@@ -381,7 +389,7 @@ public class MainForm
 
 				btnCrearRelacion.setEnabled(true);
 				btnEliminarRelacion.setEnabled(true);
-				textPeso1.setText(null);
+				textSimilitud.setText(null);
 				textCantidadRegiones.setText(null);
 	        }
 	    });

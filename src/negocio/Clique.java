@@ -15,7 +15,7 @@ public class Clique {
 	public void agregarNodoAClique(Nodo nodo, Grafo grafo, Arista arista) {  //falta agregar peso arista?
 		if (!_listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
 			_listaNodo.add(nodo);
-			this._peso = (this.obtenerPeso() + nodo.obtenerPeso());
+			
 		}
 	}
 

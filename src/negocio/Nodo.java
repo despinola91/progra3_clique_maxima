@@ -41,11 +41,6 @@ public class Nodo {
 		return peso;
 	}
 
-	public int obtenerIndiceNodo() {
-		// TODO Auto-generated method stub
-		
-		return id;
-	}
 
 
 
