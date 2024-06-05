@@ -12,12 +12,14 @@ public class Nodo {
     private Coordinate coordenadas;
     private Arista arista;
     private int peso;
+    private int cantidadVecinos;
     
     public Nodo(int id, String nombre, Coordinate coordenadas, int peso) {
         this.id = id;
         this.nombre = nombre;
         this.coordenadas = coordenadas;
         this.peso=peso;
+        this.cantidadVecinos = 0;
     }
 
     public int obtenerId() {
@@ -33,19 +35,11 @@ public class Nodo {
     }
 
 	public Object obtenerCantidadVecinos() {
-		// TODO Auto-generated method stub
-		return null;
+		return cantidadVecinos;
 	}
 
 	public Object obtenerPeso() {
 		return peso;
 	}
-
-
-
-
-
-
-
 
 }
