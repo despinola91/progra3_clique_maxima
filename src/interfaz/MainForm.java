@@ -145,7 +145,8 @@ public class MainForm
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
 				String nombre = JOptionPane.showInputDialog("Nombre Nodo: ");
-
+				
+				
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
 						grafo.agregarNodo(nombre, coordenadas);  //falta agregar el peso
@@ -372,7 +373,7 @@ public class MainForm
 	    for (Arista arista : aristas) {
 	        Nodo nodoA = arista.obtenerNodos().get(0);
 	        Nodo nodoB = arista.obtenerNodos().get(1);
-	        int peso = arista.obtenerPeso();
+	        int peso = arista.obtenerRelacion();
 	        Object[] fila = {nodoA.obtenerNombre(), nodoB.obtenerNombre(), peso};
 	        modelo.addRow(fila);
 	    }

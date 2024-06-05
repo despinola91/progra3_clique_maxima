@@ -11,10 +11,10 @@ public class Nodo {
     private String nombre;
     private Coordinate coordenadas;
     private Arista arista;
-    private int peso;
+    private double peso;
     private int cantidadVecinos;
     
-    public Nodo(int id, String nombre, Coordinate coordenadas, int peso) {
+    public Nodo(int id, String nombre, Coordinate coordenadas, double peso) {
         this.id = id;
         this.nombre = nombre;
         this.coordenadas = coordenadas;
@@ -37,7 +37,11 @@ public class Nodo {
 	public Object obtenerCantidadVecinos() {
 		return cantidadVecinos;
 	}
-
+	/*
+	public void aumentarCantVecinos() {
+		this.setCantidadVecinos(this.obtenerCantidadVecinos() + 1);
+	}
+*/
 	public Object obtenerPeso() {
 		return peso;
 	}
