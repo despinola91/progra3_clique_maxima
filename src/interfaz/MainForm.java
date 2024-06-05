@@ -44,8 +44,8 @@ public class MainForm
 	private JPanel panelControlRelaciones;
 	private JPanel panelControlRegiones;
 
-	private JComboBox<String> comboBox_Provincia2;
-	private JComboBox<String> comboBox_Provincia1;
+	private JComboBox<String> comboBox_Nodo2;
+	private JComboBox<String> comboBox_Nodo1;
 	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
 	
@@ -144,7 +144,7 @@ public class MainForm
 			if (e.getButton() == MouseEvent.BUTTON1)
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = JOptionPane.showInputDialog("Nombre provincia: ");
+				String nombre = JOptionPane.showInputDialog("Nombre Nodo: ");
 
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
@@ -160,24 +160,24 @@ public class MainForm
 		});
 	}
 	
-	private void dibujarArista(Coordinate coordenadaProv1, Coordinate coordenadaProv2) {
+	private void dibujarArista(Coordinate coordenadaNodo1, Coordinate coordenadaNodo2) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
 		//Para dibujar una arista entre dos vertices, el objeto MapPolygonImpl requiere unir A con B y luego A nuevamente.
-	    listaCoordenadas.add(coordenadaProv1);
-	    listaCoordenadas.add(coordenadaProv2);
-	    listaCoordenadas.add(coordenadaProv1);
+	    listaCoordenadas.add(coordenadaNodo1);
+	    listaCoordenadas.add(coordenadaNodo2);
+	    listaCoordenadas.add(coordenadaNodo1);
 	    
 		MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
 	    _grafo.addMapPolygon(relacion);
 	}
 	
-	private void dibujarAristaRegiones(Coordinate coordenadaProv1, Coordinate coordenadaProv2, Color color) {
+	private void dibujarAristaRegiones(Coordinate coordenadaNodo1, Coordinate coordenadaNodo2, Color color) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
-	    listaCoordenadas.add(coordenadaProv1);
-	    listaCoordenadas.add(coordenadaProv2);
-	    listaCoordenadas.add(coordenadaProv1);
+	    listaCoordenadas.add(coordenadaNodo1);
+	    listaCoordenadas.add(coordenadaNodo2);
+	    listaCoordenadas.add(coordenadaNodo1);
 	    
 	    MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
 	    relacion.setColor(color);
@@ -245,26 +245,26 @@ public class MainForm
 	
 	private void cargarRelaciones() {
 	    
-	    comboBox_Provincia1 = new JComboBox();
-	    comboBox_Provincia1.setToolTipText("Provincia");
-	    comboBox_Provincia1.setBounds(133, 44, 138, 22);
-	    panelControlRelaciones.add(comboBox_Provincia1);
+	    comboBox_Nodo1 = new JComboBox();
+	    comboBox_Nodo1.setToolTipText("Nodo");
+	    comboBox_Nodo1.setBounds(133, 44, 138, 22);
+	    panelControlRelaciones.add(comboBox_Nodo1);
 	    
-	    comboBox_Provincia2 = new JComboBox();
-	    comboBox_Provincia2.setBounds(133, 80, 138, 22);
-	    panelControlRelaciones.add(comboBox_Provincia2);
+	    comboBox_Nodo2 = new JComboBox();
+	    comboBox_Nodo2.setBounds(133, 80, 138, 22);
+	    panelControlRelaciones.add(comboBox_Nodo2);
 	    
 	    textSimilitud = new JTextPane();
 	    textSimilitud.setBounds(133, 130, 62, 22);
 	    panelControlRelaciones.add(textSimilitud);
 	    
-	    JLabel lblProvincia1 = new JLabel("Provincia 1");
-	    lblProvincia1.setBounds(25, 44, 77, 23);
-	    panelControlRelaciones.add(lblProvincia1);
+	    JLabel lblNodo1 = new JLabel("Nodo 1");
+	    lblNodo1.setBounds(25, 44, 77, 23);
+	    panelControlRelaciones.add(lblNodo1);
 	    
-	    JLabel lblProvincia2 = new JLabel("Provincia 2");
-	    lblProvincia2.setBounds(25, 80, 77, 23);
-	    panelControlRelaciones.add(lblProvincia2);
+	    JLabel lblNodo2 = new JLabel("Nodo 2");
+	    lblNodo2.setBounds(25, 80, 77, 23);
+	    panelControlRelaciones.add(lblNodo2);
 	    
 	    JLabel lblSimilitud = new JLabel("Similitud");
 	    lblSimilitud.setBounds(25, 130, 77, 23);
@@ -273,8 +273,8 @@ public class MainForm
 	    btnCrearRelacion = new JButton("Crear Relacion");
 		btnCrearRelacion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            String nombreNodo1 = comboBox_Provincia1.getSelectedItem().toString();	            
-	            String nombreNodo2 = comboBox_Provincia2.getSelectedItem().toString();
+	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();	            
+	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
 				
 	            String similitudText = textSimilitud.getText();
 	            try {
@@ -304,10 +304,10 @@ public class MainForm
 	    btnEliminarRelacion = new JButton("Eliminar Relacion");
 		btnEliminarRelacion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            String nombreProvincia1 = comboBox_Provincia1.getSelectedItem().toString();            
-	            String nombreProvincia2 = comboBox_Provincia2.getSelectedItem().toString();
+	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();            
+	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
 	            
-	            grafo.eliminarArista(nombreProvincia1, nombreProvincia2);
+	            grafo.eliminarArista(nombreNodo1, nombreNodo2);
 				dibujargrafo(grafo.obtenerMatrizArista());
 				mostrarRelaciones(false);
 	        }
@@ -384,7 +384,7 @@ public class MainForm
 	}
 
 	private void cargarDesplegablesNodos() {
-		comboBox_Provincia1.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
-		comboBox_Provincia2.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
+		comboBox_Nodo1.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
+		comboBox_Nodo2.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
 	}	
 }

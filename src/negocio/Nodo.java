@@ -11,11 +11,13 @@ public class Nodo {
     private String nombre;
     private Coordinate coordenadas;
     private Arista arista;
+    private int peso;
     
-    public Nodo(int id, String nombre, Coordinate coordenadas) {
+    public Nodo(int id, String nombre, Coordinate coordenadas, int peso) {
         this.id = id;
         this.nombre = nombre;
         this.coordenadas = coordenadas;
+        this.peso=peso;
     }
 
     public int obtenerId() {
@@ -35,9 +37,8 @@ public class Nodo {
 		return null;
 	}
 
-	public Object obtenerPeso(Nodo nodo1, Nodo nodo2) {
-		arista.obtenerPeso();  //agregar en arista
-		return null;
+	public Object obtenerPeso() {
+		return peso;
 	}
 
 	public int obtenerIndiceNodo() {

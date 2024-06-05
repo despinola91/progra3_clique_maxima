@@ -28,11 +28,11 @@ public class Grafo {
 	{
 		validarArista(nombreNodo1, nombreNodo2);
 
-        int idProv1 = nodos.get(nombreNodo1).obtenerId();
-        int idProv2 = nodos.get(nombreNodo2).obtenerId();
+        int idNodo1 = nodos.get(nombreNodo1).obtenerId();
+        int idNodo2 = nodos.get(nombreNodo2).obtenerId();
 
-        matrizDeArista[idProv1][idProv2] = peso;
-        matrizDeArista[idProv2][idProv1] = peso;
+        matrizDeArista[idNodo1][idNodo2] = peso;
+        matrizDeArista[idNodo2][idNodo1] = peso;
 
         Arista arista = new Arista(nodos.get(nombreNodo1), nodos.get(nombreNodo2), peso);
         aristas.add(arista);
@@ -80,10 +80,10 @@ public class Grafo {
      */
     public boolean existeArista(String nombreNodo1, String nombreNodo2)
 	{
-        int idProv1 = nodos.get(nombreNodo1).obtenerId();
-        int idProv2 = nodos.get(nombreNodo2).obtenerId();
+        int idNodo1 = nodos.get(nombreNodo1).obtenerId();
+        int idNodo2 = nodos.get(nombreNodo2).obtenerId();
 
-		return matrizDeArista[idProv1][idProv2] > 0;
+		return matrizDeArista[idNodo1][idNodo2] > 0;
 	}
 
     /**
@@ -105,13 +105,13 @@ public class Grafo {
      * @param nombreNodo
      * @param coordenadas
      */
-    public void agregarNodo (String nombreNodo, Coordinate coordenadas) {
+    public void agregarNodo (String nombreNodo, Coordinate coordenadas, int peso) {
         
         if (existeNodo(nombreNodo)) {
-            throw new IllegalArgumentException("La Nodo ya existe");
+            throw new IllegalArgumentException("El Nodo ya existe");
         }
 
-        Nodo Nodo = new Nodo(nodos.size(), nombreNodo, coordenadas);
+        Nodo Nodo = new Nodo(nodos.size(), nombreNodo, coordenadas, peso);
         nodos.put(nombreNodo, Nodo);
 
         int tamanioActual = matrizDeArista.length;
@@ -133,7 +133,7 @@ public class Grafo {
      */
     public void eliminarNodo (String nombreNodo) {
         if (!existeNodo(nombreNodo)) {
-            throw new IllegalArgumentException("La Nodo no existe");
+            throw new IllegalArgumentException("El Nodo no existe");
         }
         
         nodos.remove(nombreNodo);
