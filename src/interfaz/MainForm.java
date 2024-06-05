@@ -49,7 +49,7 @@ public class MainForm
 	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
 	
-	private JTextPane textSimilitud;
+	private JTextPane textPeso1;
 	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
@@ -148,8 +148,8 @@ public class MainForm
 
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
-						grafo.agregarNodo(nombre, coordenadas, peso);
-						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas, peso));
+						grafo.agregarNodo(nombre, coordenadas);
+						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -254,9 +254,9 @@ public class MainForm
 	    comboBox_Nodo2.setBounds(77, 80, 119, 22);
 	    panelControlRelaciones.add(comboBox_Nodo2);
 	    
-	    textSimilitud = new JTextPane();
-	    textSimilitud.setBounds(227, 44, 62, 22);
-	    panelControlRelaciones.add(textSimilitud);
+	    textPeso1 = new JTextPane();
+	    textPeso1.setBounds(227, 44, 62, 22);
+	    panelControlRelaciones.add(textPeso1);
 	    
 	    JLabel lblNodo1 = new JLabel("Nodo 1");
 	    lblNodo1.setBounds(25, 44, 77, 23);
@@ -276,9 +276,9 @@ public class MainForm
 	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();	            
 	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
 				
-	            String similitudText = textSimilitud.getText();
+	            String similitudText = textPeso1.getText();
 	            try {
-	                int peso = Integer.parseInt(similitudText);
+	                int peso = Integer.parseInt(similitudText);  //cambiar a double
 	                if (peso > 0) {
 	                    if (!nombreNodo1.equals(nombreNodo2)) {
 	                        grafo.agregarArista(nombreNodo1, nombreNodo2, peso);
@@ -288,10 +288,10 @@ public class MainForm
 	                        JOptionPane.showMessageDialog(null, "Las dos Nodos seleccionadas son iguales, por favor seleccione Nodos diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
 	                    }
 	                } else {
-	                    JOptionPane.showMessageDialog(null, "Debe ingresar un numero entero mayor a 0", "Error", JOptionPane.ERROR_MESSAGE);
+	                    JOptionPane.showMessageDialog(null, "Debe ingresar un numero mayor a 0", "Error", JOptionPane.ERROR_MESSAGE);
 	                }
 	            } catch (NumberFormatException ex) {
-	                JOptionPane.showMessageDialog(null, "Debe ingresar un numero entero", "Error", JOptionPane.ERROR_MESSAGE);
+	                JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
 	            }
 				catch (IllegalArgumentException ex) {
 	                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -320,9 +320,9 @@ public class MainForm
 	    lblTituloRelaciones.setBounds(25, 11, 208, 22);
 	    panelControlRelaciones.add(lblTituloRelaciones);
 	    
-	    JTextPane textSimilitud_1 = new JTextPane();
-	    textSimilitud_1.setBounds(227, 80, 62, 22);
-	    panelControlRelaciones.add(textSimilitud_1);
+	    JTextPane textPeso2 = new JTextPane();
+	    textPeso2.setBounds(227, 80, 62, 22);
+	    panelControlRelaciones.add(textPeso2);
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
@@ -381,7 +381,7 @@ public class MainForm
 
 				btnCrearRelacion.setEnabled(true);
 				btnEliminarRelacion.setEnabled(true);
-				textSimilitud.setText(null);
+				textPeso1.setText(null);
 				textCantidadRegiones.setText(null);
 	        }
 	    });
