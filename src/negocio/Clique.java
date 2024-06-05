@@ -22,7 +22,7 @@ public class Clique {
 	private boolean esVecinodeTodos(Nodo nodo, Grafo grafo) {
 		boolean ret = true;
 		for (Nodo iteracion : _listaNodo) {
-			ret = ret && grafo.obtenerindiceConVecinos().get(iteracion.obtenerId()).contains(nodo);
+			ret = ret && grafo.obtenerIndiceConVecinos().get(iteracion.obtenerId()).contains(nodo);
 		}
 		return ret;
 	}

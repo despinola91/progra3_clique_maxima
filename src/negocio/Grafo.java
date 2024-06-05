@@ -12,6 +12,7 @@ public class Grafo {
     private ArrayList<Arista> aristas = new ArrayList<>();
     private int[][] matrizDeArista;
     private int[][] matrizDeRegiones;
+	private HashMap<Integer, ArrayList<Nodo>> indiceConVecinos;
     
     public Grafo()
 	{
@@ -305,10 +306,10 @@ public class Grafo {
         aristas.clear();
     }
 
-	public ArrayList<Nodo> obtenerindiceConVecinos() {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<Integer, ArrayList<Nodo>> obtenerIndiceConVecinos() {
+		return this.indiceConVecinos;
 	}
+
 
 
 
