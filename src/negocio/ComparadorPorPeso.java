@@ -8,7 +8,7 @@ public class ComparadorPorPeso implements Comparator<Nodo> {
 	public int compare(Nodo uno, Nodo otro) {
 		if (uno.obtenerPeso() == otro.obtenerPeso())//
 			return 0;
-		if (uno.getPeso() > otro.getPeso())
+		if (uno.obtenerPeso() > otro.obtenerPeso())
 			return -1;
 		else
 			return 1;

@@ -33,15 +33,19 @@ public class Nodo {
     public Coordinate obtenerCoordenadas() {
         return coordenadas;
     }
-
-	public Object obtenerCantidadVecinos() {
-		return cantidadVecinos;
-	}
-	/*
+	
 	public void aumentarCantVecinos() {
 		this.setCantidadVecinos(this.obtenerCantidadVecinos() + 1);
 	}
-*/
+//me lo propone eclipse para solucionar el problema.
+	private void setCantidadVecinos(int i) {
+		this.cantidadVecinos=i;
+	}
+
+	public int obtenerCantidadVecinos() {
+		return cantidadVecinos;
+	}
+	
 	public Object obtenerPeso() {
 		return peso;
 	}
