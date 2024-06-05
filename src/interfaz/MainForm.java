@@ -104,7 +104,7 @@ public class MainForm
 		
 		panelControlRelaciones = new JPanel();
 		panelControlRelaciones.setToolTipText("");
-		panelControlRelaciones.setBounds(457, 11, 297, 251);
+		panelControlRelaciones.setBounds(457, 11, 313, 251);
 		frmNodosGolosos.getContentPane().add(panelControlRelaciones);		
 		panelControlRelaciones.setLayout(null);
 		
@@ -148,8 +148,8 @@ public class MainForm
 
 				if (nombre != null && !nombre.isEmpty()) {
 					try {
-						grafo.agregarNodo(nombre, coordenadas);
-						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
+						grafo.agregarNodo(nombre, coordenadas, peso);
+						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas, peso));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -247,15 +247,15 @@ public class MainForm
 	    
 	    comboBox_Nodo1 = new JComboBox();
 	    comboBox_Nodo1.setToolTipText("Nodo");
-	    comboBox_Nodo1.setBounds(133, 44, 138, 22);
+	    comboBox_Nodo1.setBounds(77, 44, 119, 22);
 	    panelControlRelaciones.add(comboBox_Nodo1);
 	    
 	    comboBox_Nodo2 = new JComboBox();
-	    comboBox_Nodo2.setBounds(133, 80, 138, 22);
+	    comboBox_Nodo2.setBounds(77, 80, 119, 22);
 	    panelControlRelaciones.add(comboBox_Nodo2);
 	    
 	    textSimilitud = new JTextPane();
-	    textSimilitud.setBounds(133, 130, 62, 22);
+	    textSimilitud.setBounds(227, 44, 62, 22);
 	    panelControlRelaciones.add(textSimilitud);
 	    
 	    JLabel lblNodo1 = new JLabel("Nodo 1");
@@ -266,9 +266,9 @@ public class MainForm
 	    lblNodo2.setBounds(25, 80, 77, 23);
 	    panelControlRelaciones.add(lblNodo2);
 	    
-	    JLabel lblSimilitud = new JLabel("Similitud");
-	    lblSimilitud.setBounds(25, 130, 77, 23);
-	    panelControlRelaciones.add(lblSimilitud);
+	    JLabel lblPeso = new JLabel("Peso");
+	    lblPeso.setBounds(228, 13, 77, 23);
+	    panelControlRelaciones.add(lblPeso);
 	    
 	    btnCrearRelacion = new JButton("Crear Relacion");
 		btnCrearRelacion.addActionListener(new ActionListener() {
@@ -319,6 +319,10 @@ public class MainForm
 	    lblTituloRelaciones.setFont(new Font("Tahoma", Font.ITALIC, 16));
 	    lblTituloRelaciones.setBounds(25, 11, 208, 22);
 	    panelControlRelaciones.add(lblTituloRelaciones);
+	    
+	    JTextPane textSimilitud_1 = new JTextPane();
+	    textSimilitud_1.setBounds(227, 80, 62, 22);
+	    panelControlRelaciones.add(textSimilitud_1);
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
