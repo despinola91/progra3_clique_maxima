@@ -325,6 +325,8 @@ public class MainForm
 	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	    lblCriterio.setBounds(25, 192, 46, 14);
 	    panelControlRelaciones.add(lblCriterio);
+        comboBox_Criterio.addItem("Peso");
+        comboBox_Criterio.addItem("Grado");
 	    
 	    JButton btnEjecutar = new JButton("Ejecutar");
 	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
