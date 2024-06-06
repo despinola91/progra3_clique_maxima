@@ -20,7 +20,11 @@ public class SolverGoloso {
 		Clique clique = new Clique();
 		for(Vertice vertice: verticesOrdenados())
 		{
-			if(true) // TODO Si el vertice sigue perteneciendo a la clique
+			if (clique.obtenerGrado() == 0) {
+				clique.agregarVertice(vertice);
+			}
+
+			if(vertice.perteneceAClique(clique, _grafo))
 				clique.agregarVertice(vertice);
 		}
 		
@@ -34,5 +38,4 @@ public class SolverGoloso {
 		
 		return vertices;
 	}
-
 }

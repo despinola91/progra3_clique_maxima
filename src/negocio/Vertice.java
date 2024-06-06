@@ -37,4 +37,9 @@ public class Vertice {
         Integer grado = 0;
         return grado;
     }
+
+    public boolean perteneceAClique(Clique clique, Grafo _grafo) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'perteneceAClique'");
+    }
 }
