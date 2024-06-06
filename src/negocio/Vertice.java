@@ -31,4 +31,10 @@ public class Vertice {
 	public double obtenerPeso() {
 		return _peso;
 	}
+
+    public Integer obtenerGrado() {
+        // TODO Auto-generated method stub
+        Integer grado = 0;
+        return grado;
+    }
 }

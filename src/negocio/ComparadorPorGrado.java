@@ -2,13 +2,13 @@ package negocio;
 
 import java.util.Comparator;
 
-public class ComparadorPorGrado implements Comparator<Nodo> {
+public class ComparadorPorGrado implements Comparator<Vertice> {
 
 	@Override
-	public int compare(Nodo uno, Nodo otro) {
-		if (uno.obtenerCantidadVecinos() == otro.obtenerCantidadVecinos())
+	public int compare(Vertice uno, Vertice otro) {
+		if (uno.obtenerGrado() == otro.obtenerGrado())
 			return 0;
-		if (uno.obtenerCantidadVecinos() > otro.obtenerCantidadVecinos())
+		if (uno.obtenerGrado() > otro.obtenerGrado())
 			return -1;
 		else
 			return 1;
