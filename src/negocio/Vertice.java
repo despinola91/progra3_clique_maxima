@@ -2,52 +2,33 @@ package negocio;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
-/**
- 
- */
 public class Vertice {
 
-    private int id;
-    private String nombre;
-    private Coordinate coordenadas;
-    private Arista arista;
-    private double peso;
-    private int cantidadVecinos;
+    private int _id;
+    private String _nombre;
+    private Coordinate _coordenadas;
+    private double _peso;
     
     public Vertice(int id, String nombre, Coordinate coordenadas, double peso) {
-        this.id = id;
-        this.nombre = nombre;
-        this.coordenadas = coordenadas;
-        this.peso=peso;
-        this.cantidadVecinos = 0;
+        this._id = id;
+        this._nombre = nombre;
+        this._coordenadas = coordenadas;
+        this._peso = peso;
     }
 
     public int obtenerId() {
-        return id;
+        return _id;
     }
 
     public String obtenerNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public Coordinate obtenerCoordenadas() {
-        return coordenadas;
+        return _coordenadas;
     }
 	
-	public void aumentarCantVecinos() {
-		this.setCantidadVecinos(this.obtenerCantidadVecinos() + 1);
+	public double obtenerPeso() {
+		return _peso;
 	}
-//me lo propone eclipse para solucionar el problema.
-	private void setCantidadVecinos(int i) {
-		this.cantidadVecinos=i;
-	}
-
-	public int obtenerCantidadVecinos() {
-		return cantidadVecinos;
-	}
-	
-	public Object obtenerPeso() {
-		return peso;
-	}
-
 }
