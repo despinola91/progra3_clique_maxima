@@ -33,6 +33,7 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JCheckBox;
 
 
 
@@ -48,8 +49,6 @@ public class MainForm
 	private JComboBox<String> comboBox_Nodo1;
 	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
-	
-	private JTextPane textSimilitud;
 	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
@@ -57,8 +56,8 @@ public class MainForm
 	
 	private Grafo grafo;
 
-	private JButton btnCrearRelacion;
-	private JButton btnEliminarRelacion;
+	private JButton btnUnirNodos;
+	private JButton btnEliminarUnion;
 
 	/**
 	 * Launch the application.
@@ -104,7 +103,7 @@ public class MainForm
 		
 		panelControlRelaciones = new JPanel();
 		panelControlRelaciones.setToolTipText("");
-		panelControlRelaciones.setBounds(457, 11, 313, 251);
+		panelControlRelaciones.setBounds(457, 11, 313, 310);
 		frmNodosGolosos.getContentPane().add(panelControlRelaciones);		
 		panelControlRelaciones.setLayout(null);
 		
@@ -116,7 +115,7 @@ public class MainForm
 		panelgrafo.add(_grafo);
 		
 		panelControlRegiones = new JPanel();
-		panelControlRegiones.setBounds(455, 273, 299, 249);
+		panelControlRegiones.setBounds(455, 332, 315, 190);
 		frmNodosGolosos.getContentPane().add(panelControlRegiones);
 		panelControlRegiones.setLayout(null);
 		
@@ -248,31 +247,26 @@ public class MainForm
 	    
 	    comboBox_Nodo1 = new JComboBox();
 	    comboBox_Nodo1.setToolTipText("Nodo");
-	    comboBox_Nodo1.setBounds(77, 69, 119, 22);
+	    comboBox_Nodo1.setBounds(141, 57, 138, 22);
 	    panelControlRelaciones.add(comboBox_Nodo1);
 	    
 	    comboBox_Nodo2 = new JComboBox();
-	    comboBox_Nodo2.setBounds(77, 105, 119, 22);
+	    comboBox_Nodo2.setBounds(141, 91, 138, 22);
 	    panelControlRelaciones.add(comboBox_Nodo2);
 	    
-	    textSimilitud = new JTextPane();
-	    textSimilitud.setBounds(87, 138, 62, 22);
-	    panelControlRelaciones.add(textSimilitud);
-	    
 	    JLabel lblNodo1 = new JLabel("Nodo 1");
-	    lblNodo1.setBounds(25, 69, 77, 23);
+	    lblNodo1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblNodo1.setBounds(25, 56, 62, 23);
 	    panelControlRelaciones.add(lblNodo1);
 	    
 	    JLabel lblNodo2 = new JLabel("Nodo 2");
-	    lblNodo2.setBounds(25, 105, 77, 23);
+	    lblNodo2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblNodo2.setBounds(25, 90, 62, 23);
 	    panelControlRelaciones.add(lblNodo2);
 	    
-	    JLabel lblPeso = new JLabel("Peso");
-	    lblPeso.setBounds(228, 38, 77, 23);
-	    panelControlRelaciones.add(lblPeso);
-	    
-	    btnCrearRelacion = new JButton("Crear Relacion");
-		btnCrearRelacion.addActionListener(new ActionListener() {
+	    btnUnirNodos = new JButton("Unir Nodos");
+	    btnUnirNodos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnirNodos.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();	            
 	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
@@ -299,11 +293,12 @@ public class MainForm
 	            }
 	        }
 	    });
-	    btnCrearRelacion.setBounds(9, 185, 134, 23);
-	    panelControlRelaciones.add(btnCrearRelacion);
+	    btnUnirNodos.setBounds(10, 140, 134, 23);
+	    panelControlRelaciones.add(btnUnirNodos);
 	    
-	    btnEliminarRelacion = new JButton("Eliminar Relacion");
-		btnEliminarRelacion.addActionListener(new ActionListener() {
+	    btnEliminarUnion = new JButton("Eliminar Union");
+	    btnEliminarUnion.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnEliminarUnion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();            
 	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
@@ -313,25 +308,33 @@ public class MainForm
 				mostrarRelaciones(false);
 	        }
 	    });
-	    btnEliminarRelacion.setBounds(151, 185, 138, 23);
-	    panelControlRelaciones.add(btnEliminarRelacion);
+	    btnEliminarUnion.setBounds(165, 140, 138, 23);
+	    panelControlRelaciones.add(btnEliminarUnion);
 	    
-	    JLabel lblTituloRelaciones = new JLabel("Creacion de relaciones");
-	    lblTituloRelaciones.setFont(new Font("Tahoma", Font.ITALIC, 16));
-	    lblTituloRelaciones.setBounds(25, 12, 208, 22);
-	    panelControlRelaciones.add(lblTituloRelaciones);
+	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
+	    lblTituloGrafo.setFont(new Font("Tahoma", Font.ITALIC, 16));
+	    lblTituloGrafo.setBounds(25, 12, 208, 22);
+	    panelControlRelaciones.add(lblTituloGrafo);
 	    
-	    JTextPane textPeso2 = new JTextPane();
-	    textPeso2.setBounds(227, 105, 62, 22);
-	    panelControlRelaciones.add(textPeso2);
+	    JComboBox comboBox_Criterio = new JComboBox();
+	    comboBox_Criterio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    comboBox_Criterio.setBounds(24, 217, 120, 22);
+	    panelControlRelaciones.add(comboBox_Criterio);
 	    
-	    JTextPane textPeso2_1 = new JTextPane();
-	    textPeso2_1.setBounds(227, 69, 62, 22);
-	    panelControlRelaciones.add(textPeso2_1);
+	    JLabel lblCriterio = new JLabel("Criterio");
+	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblCriterio.setBounds(25, 192, 46, 14);
+	    panelControlRelaciones.add(lblCriterio);
 	    
-	    JLabel lblRelacin = new JLabel("Relación");
-	    lblRelacin.setBounds(25, 137, 53, 23);
-	    panelControlRelaciones.add(lblRelacin);
+	    JButton btnEjecutar = new JButton("Ejecutar");
+	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnEjecutar.setBounds(214, 276, 89, 23);
+	    panelControlRelaciones.add(btnEjecutar);
+	    
+	    JCheckBox chckbxRandom = new JCheckBox("Random");
+	    chckbxRandom.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    chckbxRandom.setBounds(182, 216, 97, 23);
+	    panelControlRelaciones.add(chckbxRandom);
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
@@ -388,8 +391,8 @@ public class MainForm
 	      
 				cargarDesplegablesNodos();
 
-				btnCrearRelacion.setEnabled(true);
-				btnEliminarRelacion.setEnabled(true);
+				btnUnirNodos.setEnabled(true);
+				btnEliminarUnion.setEnabled(true);
 				textSimilitud.setText(null);
 				textCantidadRegiones.setText(null);
 	        }
