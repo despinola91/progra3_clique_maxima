@@ -5,7 +5,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 /**
  
  */
-public class Nodo {
+public class Vertice {
 
     private int id;
     private String nombre;
@@ -14,7 +14,7 @@ public class Nodo {
     private double peso;
     private int cantidadVecinos;
     
-    public Nodo(int id, String nombre, Coordinate coordenadas, double peso) {
+    public Vertice(int id, String nombre, Coordinate coordenadas, double peso) {
         this.id = id;
         this.nombre = nombre;
         this.coordenadas = coordenadas;
