@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 import negocio.Grafo;
-import negocio.Nodo;
+import negocio.Vertice;
 
 
 class GrafoTest {
@@ -98,7 +98,7 @@ class GrafoTest {
 	
 		Grafo grafo = new Grafo();
 		grafo.agregarNodo("Buenos Aires", new Coordinate(50, 60));
-		Nodo nodo = grafo.obtenerNodoPorNombre("Buenos Aires");
+		Vertice nodo = grafo.obtenerNodoPorNombre("Buenos Aires");
 		
 		assertTrue(nodo.obtenerId() ==0);
 		assertTrue(nodo.obtenerNombre() == "Buenos Aires");
@@ -111,7 +111,7 @@ class GrafoTest {
 	
 		Grafo grafo = new Grafo();
 		grafo.agregarNodo("Buenos Aires", new Coordinate(50, 60));
-		Nodo nodo = grafo.obtenerNodoPorId(0);
+		Vertice nodo = grafo.obtenerNodoPorId(0);
 
 		assertTrue(nodo.obtenerId() ==0);
 		assertTrue(nodo.obtenerNombre() == "Buenos Aires");

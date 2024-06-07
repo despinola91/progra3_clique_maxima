@@ -8,11 +8,11 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Grafo {
 
-    private HashMap<String, Nodo> nodos = new HashMap<>();
+    private HashMap<String, Vertice> vertices = new HashMap<>();
     private ArrayList<Arista> aristas = new ArrayList<>();
     private int[][] matrizDeArista;
     private int[][] matrizDeRegiones;
-	private HashMap<Integer, ArrayList<Nodo>> indiceConVecinos;
+	private HashMap<Integer, ArrayList<Vertice>> indiceConVecinos;
     
     public Grafo()
 	{
@@ -20,100 +20,100 @@ public class Grafo {
 	}
 
     /**
-     * Agrega una relación al mapa entre dos Nodos.
-     * @param nombreNodo1
-     * @param nombreNodo2
+     * Agrega una arista al grafo entre dos vertices.
+     * @param nombreVertice1
+     * @param nombreVertice2
      * @param peso
      */
-    public void agregarArista(String nombreNodo1, String nombreNodo2, int peso)
+    public void agregarArista(String nombreVertice1, String nombreVertice2, int peso)
 	{
-		validarArista(nombreNodo1, nombreNodo2);
+		validarArista(nombreVertice1, nombreVertice2);
 
-        int idNodo1 = nodos.get(nombreNodo1).obtenerId();
-        int idNodo2 = nodos.get(nombreNodo2).obtenerId();
+        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
 
-        matrizDeArista[idNodo1][idNodo2] = peso;
-        matrizDeArista[idNodo2][idNodo1] = peso;
+        matrizDeArista[idVertice1][idVertice2] = peso;
+        matrizDeArista[idVertice2][idVertice1] = peso;
 
-        Arista arista = new Arista(nodos.get(nombreNodo1), nodos.get(nombreNodo2), peso);
+        Arista arista = new Arista(vertices.get(nombreVertice1), vertices.get(nombreVertice2), peso);
         aristas.add(arista);
 	}
 
     /**
-     * Elimina una relación entre dos Nodos.
-     * @param nombreNodo1
-     * @param nombreNodo2
+     * Elimina una arista entre dos vertices.
+     * @param nombreVertice1
+     * @param nombreVertice2
      */
-    public void eliminarArista(String nombreNodo1, String nombreNodo2)
+    public void eliminarArista(String nombreVertice1, String nombreVertice2)
 	{
-        Nodo NodoA = nodos.get(nombreNodo1);
-        Nodo NodoB = nodos.get(nombreNodo2);
+        Vertice VerticeA = vertices.get(nombreVertice1);
+        Vertice VerticeB = vertices.get(nombreVertice2);
 
-        int idNodo1 = NodoA.obtenerId();
-        int idNodo2 = NodoB.obtenerId();
+        int idVertice1 = VerticeA.obtenerId();
+        int idVertice2 = VerticeB.obtenerId();
 
-		matrizDeArista[idNodo1][idNodo2] = 0;
-        matrizDeArista[idNodo2][idNodo1] = 0;
+		matrizDeArista[idVertice1][idVertice2] = 0;
+        matrizDeArista[idVertice2][idVertice1] = 0;
         
-        aristas.remove(Arista.obtenerArista(aristas, NodoA, NodoB));
+        aristas.remove(Arista.obtenerArista(aristas, VerticeA, VerticeB));
 	}
 
     /**
-     * Valida si una relación entre dos Nodos es correcta.
-     * @param nombreNodo1
-     * @param nombreNodo2
+     * Valida si una arista entre dos vertices es correcta.
+     * @param nombreVertice1
+     * @param nombreVertice2
      */
-    private void validarArista (String nombreNodo1, String nombreNodo2) {
-        if (!existeNodo(nombreNodo1) || !existeNodo(nombreNodo2) || nombreNodo1 == nombreNodo2) {
-            throw new IllegalArgumentException("La relación es inválida");
+    private void validarArista (String nombreVertice1, String nombreVertice2) {
+        if (!existeVertice(nombreVertice1) || !existeVertice(nombreVertice2) || nombreVertice1 == nombreVertice2) {
+            throw new IllegalArgumentException("La arista es inválida");
         }
 
-        if (existeArista(nombreNodo1, nombreNodo2)) {
-            throw new IllegalArgumentException("La relación ya existe");
+        if (existeArista(nombreVertice1, nombreVertice2)) {
+            throw new IllegalArgumentException("La arista ya existe");
         }
     }
 
     /**
-     * Informa si ya existe una relación entre dos Nodos.
-     * @param nombreNodo1
-     * @param nombreNodo2
-     * @return booleano indicando si existe la relación.
+     * Informa si ya existe una arista entre dos vertices.
+     * @param nombreVertice1
+     * @param nombreVertice2
+     * @return booleano indicando si existe la arista.
      */
-    public boolean existeArista(String nombreNodo1, String nombreNodo2)
+    public boolean existeArista(String nombreVertice1, String nombreVertice2)
 	{
-        int idNodo1 = nodos.get(nombreNodo1).obtenerId();
-        int idNodo2 = nodos.get(nombreNodo2).obtenerId();
+        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
 
-		return matrizDeArista[idNodo1][idNodo2] > 0;
+		return matrizDeArista[idVertice1][idVertice2] > 0;
 	}
 
     /**
-     * Informa si ya existe una relación entre dos Nodos dentro de las regiones.
-     * @param nombreNodo1
-     * @param nombreNodo2
-     * @return booleano indicando si existe la relación.
+     * Informa si ya existe una arista entre dos vertices dentro de las regiones.
+     * @param nombreVertice1
+     * @param nombreVertice2
+     * @return booleano indicando si existe la arista.
      */
-    public boolean existeAristaRegiones(String nombreNodo1, String nombreNodo2)
+    public boolean existeAristaRegiones(String nombreVertice1, String nombreVertice2)
 	{
-        int idNodo1 = nodos.get(nombreNodo1).obtenerId();
-        int idNodo2 = nodos.get(nombreNodo2).obtenerId();
+        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
 
-		return matrizDeRegiones[idNodo1][idNodo2] > 0;
+		return matrizDeRegiones[idVertice1][idVertice2] > 0;
 	}
 
     /**
-     * Agrega una Nodo al mapa.
-     * @param nombreNodo
+     * Agrega una Vertice al grafo.
+     * @param nombreVertice
      * @param coordenadas
      */
-    public void agregarNodo (String nombreNodo, Coordinate coordenadas, int peso) {
+    public void agregarVertice (String nombreVertice, Coordinate coordenadas, int peso) {
         
-        if (existeNodo(nombreNodo)) {
-            throw new IllegalArgumentException("El Nodo ya existe");
+        if (existeVertice(nombreVertice)) {
+            throw new IllegalArgumentException("El Vertice ya existe");
         }
 
-        Nodo Nodo = new Nodo(nodos.size(), nombreNodo, coordenadas, peso);
-        nodos.put(nombreNodo, Nodo);
+        Vertice Vertice = new Vertice(vertices.size(), nombreVertice, coordenadas, peso);
+        vertices.put(nombreVertice, Vertice);
 
         int tamanioActual = matrizDeArista.length;
         int nuevoTamanio = matrizDeArista.length + 1;
@@ -129,15 +129,15 @@ public class Grafo {
     }
 
     /**
-     * Elimina Nodo del mapa.
-     * @param nombreNodo
+     * Elimina Vertice del grafo.
+     * @param nombreVertice
      */
-    public void eliminarNodo (String nombreNodo) {
-        if (!existeNodo(nombreNodo)) {
-            throw new IllegalArgumentException("El Nodo no existe");
+    public void eliminarVertice (String nombreVertice) {
+        if (!existeVertice(nombreVertice)) {
+            throw new IllegalArgumentException("El Vertice no existe");
         }
         
-        nodos.remove(nombreNodo);
+        vertices.remove(nombreVertice);
         int nuevoTamanio = matrizDeArista.length - 1;
         int[][] nuevaMatrizArista = new int[nuevoTamanio][nuevoTamanio];
 
@@ -151,62 +151,62 @@ public class Grafo {
     }
 
     /**
-     * Informa si ya existe la Nodo dentro del mapa.
-     * @param nombreNodo
-     * @return booleano indicando si la Nodo ya existe.
+     * Informa si ya existe el vertice dentro del grafo.
+     * @param nombreVertice
+     * @return booleano indicando si el vertice ya existe.
      */
-    public boolean existeNodo (String nombreNodo) {
-        return nodos.containsKey(nombreNodo);
+    public boolean existeVertice (String nombreVertice) {
+        return vertices.containsKey(nombreVertice);
     }
 
     /**
-     * Obtiene la dimensión de la matriz relación actual.
+     * Obtiene la dimensión de la matriz arista actual.
      * @return dimensión de la matriz.
      */
     public int obtenerDimensionMatrizArista() {
         return matrizDeArista.length;
     }
 
-    public Nodo obtenerNodo(String nombreNodo) {
-        Nodo nodo = nodos.get(nombreNodo);
+    public Vertice obtenerVertice(String nombreVertice) {
+        Vertice nodo = vertices.get(nombreVertice);
         return nodo;
     }
 
     /**
-     * Obtiene lista Nodos del mapa.
-     * @return  lista de Nodos agregadas al mapa.
+     * Obtiene lista vertices del grafo.
+     * @return  lista de vertices agregadas al grafo.
      */
-    public ArrayList<String> obtenerNodos() {
-        ArrayList<String> listaNodos = new ArrayList<>();
-        listaNodos.addAll(nodos.keySet());
-        Collections.sort(listaNodos);
+    public ArrayList<Vertice> obtenerVertices() {
+        ArrayList<String> listaVertices = new ArrayList<>();
+        listaVertices.addAll(vertices.keySet());
+        Collections.sort(listaVertices);
         
-        return listaNodos;
+        return _vertices;
     }
 
     /**
-     * Obtiene el objeto Nodo a partir de un nombre de Nodo.
-     * @param nombreNodo
-     * @return objeto Nodo.
+     * Obtiene el objeto Vertice a partir de un nombre de Vertice.
+     * @param nombreVertice
+     * @return objeto Vertice.
      */
-    public Nodo obtenerNodoPorNombre(String nombreNodo) {
-        return nodos.get(nombreNodo);
+    public Vertice obtenerVerticePorNombre(String nombreVertice) {
+        return vertices.get(nombreVertice);
     }
 
     /**
-     * Obtiene Nodo por id.
+     * Obtiene Vertice por id.
      * @param id
-     * @return  objeto Nodo.
+     * @return  objeto Vertice.
      */
-    public Nodo obtenerNodoPorId(int id) {
+    public Vertice obtenerVerticePorId(int id) {
         
-        for (Nodo Nodo : nodos.values()) {
-            if (Nodo.obtenerId() == id) {
-                return Nodo;
+        for (Vertice Vertice : vertices.values()) {
+            if (Vertice.obtenerId() == id) {
+                return Vertice;
             }
         }
 
-        throw new IllegalArgumentException("Nodo not found for id: " + id);
+        throw new IllegalArgumentException("Vertice not found for id: " + id);
     }
 
     
@@ -248,17 +248,17 @@ public class Grafo {
 
 
     /**
-     * Obtiene matriz de relación.
-     * @return matriz de relación.
+     * Obtiene matriz de arista.
+     * @return matriz de arista.
      */
     public int[][] obtenerMatrizArista() {
         return matrizDeArista;
     }
 
     /**
-     * Indica si el mapa es conexo utilizando BFS.
+     * Indica si el grafo es conexo utilizando BFS.
      * @param matriz
-     * @return booleano indicando si el mapa es conexo o no.
+     * @return booleano indicando si el grafo es conexo o no.
      */
     public boolean esGrafoConexo(int[][] matriz) {
         
@@ -267,7 +267,7 @@ public class Grafo {
     
     /**
      * Obtiene lista de Aristaes creadas hasta el momento por el usuario.
-     * @return lista de objetos de tipo Relación.
+     * @return lista de objetos de tipo arista.
      */
     public ArrayList<Arista> obtenerAristas() {
         return aristas;
@@ -285,10 +285,10 @@ public class Grafo {
             for (int j = i+1; j < matrizDeRegiones.length; j++) {
                 if (matrizDeRegiones[i][j] > 0){
                     
-                    Nodo NodoA = obtenerNodoPorId(i);
-                    Nodo NodoB = obtenerNodoPorId(j);
+                    Vertice VerticeA = obtenerVerticePorId(i);
+                    Vertice VerticeB = obtenerVerticePorId(j);
 
-                    Aristas.add(new Arista(NodoA, NodoB, matrizDeRegiones[i][j]));
+                    Aristas.add(new Arista(VerticeA, VerticeB, matrizDeRegiones[i][j]));
                 }
             }
         }
@@ -296,17 +296,17 @@ public class Grafo {
     }
 
     /**
-     * Reinicia el mapa.
+     * Reinicia el grafo.
      */
     public void reiniciarGrafo() {
 
         matrizDeArista = new int[0][0];
         matrizDeRegiones = new int[0][0];
-        nodos.clear();
+        vertices.clear();
         aristas.clear();
     }
 
-	public HashMap<Integer, ArrayList<Nodo>> obtenerIndiceConVecinos() {
+	public HashMap<Integer, ArrayList<Vertice>> obtenerIndiceConVecinos() {
 		return this.indiceConVecinos;
 	}
 
