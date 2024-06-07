@@ -4,34 +4,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SolverGoloso
-{
-	private Instancia _instancia;
-	private Comparator<Objeto> _comparador;
+public class SolverGoloso {
+
+    private Grafo _grafo;
+	private Comparator<Vertice> _comparador;
 	
-	public SolverGoloso(Instancia instancia, Comparator<Objeto> comparador)
+	public SolverGoloso(Grafo grafo, Comparator<Vertice> comparador)
 	{
-		_instancia = instancia;
+		_grafo = grafo;
 		_comparador = comparador;
 	}
 	
-	public Solucion resolver()
+	public Clique resolver()
 	{
-		Solucion ret = new Solucion();
-		for(Objeto objeto: objetosOrdenados())
+		Clique clique = new Clique();
+		for(Vertice vertice: verticesOrdenados())
 		{
-			if( ret.peso() + objeto.getPeso() <= _instancia.getCapacidad() )
-				ret.agregar(objeto);
+			if (clique.obtenerGrado() == 0) {
+				clique.agregarVertice(vertice);
+			}
+
+			if(vertice.perteneceAClique(clique, _grafo))
+				clique.agregarVertice(vertice);
 		}
 		
-		return ret;
+		return clique;
 	}
 
-	private ArrayList<Objeto> objetosOrdenados()
+	private ArrayList<Vertice> verticesOrdenados()
 	{
-		ArrayList<Objeto> ret = _instancia.getObjetos();
-		Collections.sort(ret, _comparador);
+		ArrayList<Vertice> vertices = _grafo.obtenerVertices();
+		Collections.sort(vertices, _comparador);
 		
-		return ret;
+		return vertices;
 	}
 }
