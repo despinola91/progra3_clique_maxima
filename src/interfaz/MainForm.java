@@ -305,7 +305,6 @@ public class MainForm
 	    for (Arista arista : aristas) {
 	        Vertice verticeA = arista.obtenerVertices().get(0);
 	        Vertice verticeB = arista.obtenerVertices().get(1);
-	        //int peso = arista.obtenerArista();
 	        Object[] fila = {verticeA.obtenerNombre(), verticeB.obtenerNombre()};
 	        modelo.addRow(fila);
 	    }
@@ -322,7 +321,6 @@ public class MainForm
 
 				btnUnirVertices.setEnabled(true);
 				btnEliminarUnion.setEnabled(true);
-				//textSimilitud.setText(null);
 				textCantidadRegiones.setText(null);
 	        }
 	    });
