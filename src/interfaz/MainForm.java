@@ -142,12 +142,14 @@ public class MainForm
 			if (e.getButton() == MouseEvent.BUTTON1)
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = JOptionPane.showInputDialog("Nombre Nodo: ");
-				
-				
-				if (nombre != null && !nombre.isEmpty()) {
+				String nombre = JOptionPane.showInputDialog("Nombre Vertice: ");
+				String pesoString = JOptionPane.showInputDialog("Peso Vertice: ");
+				int peso;
+				peso = Integer.parseInt(pesoString);
+
+				if (nombre != null && !nombre.isEmpty() && peso != 0) {
 					try {
-						grafo.agregarNodo(nombre, coordenadas);  //falta agregar el peso
+						grafo.agregarVertice(nombre, coordenadas, peso);  //falta agregar el peso
 						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
