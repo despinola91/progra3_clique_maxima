@@ -273,7 +273,7 @@ public class MainForm
 
 				try {
 					if (!nombreNodo1.equals(nombreNodo2)) {
-						grafo.agregarArista(nombreNodo1, nombreNodo2, peso);
+						grafo.agregarArista(nombreNodo1, nombreNodo2);
 						dibujargrafo(grafo.obtenerMatrizArista());
 						mostrarRelaciones(false);
 					} else {

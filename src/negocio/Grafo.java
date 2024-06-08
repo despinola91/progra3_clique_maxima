@@ -25,17 +25,17 @@ public class Grafo {
      * @param nombreVertice2
      * @param peso
      */
-    public void agregarArista(String nombreVertice1, String nombreVertice2, int peso)
+    public void agregarArista(String nombreVertice1, String nombreVertice2)
 	{
 		validarArista(nombreVertice1, nombreVertice2);
 
         int idVertice1 = vertices.get(nombreVertice1).obtenerId();
         int idVertice2 = vertices.get(nombreVertice2).obtenerId();
 
-        matrizDeArista[idVertice1][idVertice2] = peso;
-        matrizDeArista[idVertice2][idVertice1] = peso;
+        matrizDeArista[idVertice1][idVertice2] = 1;
+        matrizDeArista[idVertice2][idVertice1] = 1;
 
-        Arista arista = new Arista(vertices.get(nombreVertice1), vertices.get(nombreVertice2), peso);
+        Arista arista = new Arista(vertices.get(nombreVertice1), vertices.get(nombreVertice2));
         aristas.add(arista);
 	}
 
