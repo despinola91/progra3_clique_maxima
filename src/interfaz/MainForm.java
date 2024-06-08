@@ -162,24 +162,24 @@ public class MainForm
 		});
 	}
 	
-	private void dibujarArista(Coordinate coordenadaNodo1, Coordinate coordenadaNodo2) {
+	private void dibujarArista(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
 		//Para dibujar una arista entre dos vertices, el objeto MapPolygonImpl requiere unir A con B y luego A nuevamente.
-	    listaCoordenadas.add(coordenadaNodo1);
-	    listaCoordenadas.add(coordenadaNodo2);
-	    listaCoordenadas.add(coordenadaNodo1);
+	    listaCoordenadas.add(coordenadaVertice1);
+	    listaCoordenadas.add(coordenadaVertice2);
+	    listaCoordenadas.add(coordenadaVertice1);
 	    
 		MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
 	    _grafo.addMapPolygon(relacion);
 	}
 	
-	private void dibujarAristaRegiones(Coordinate coordenadaNodo1, Coordinate coordenadaNodo2, Color color) {
+	private void dibujarAristaRegiones(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2, Color color) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
-	    listaCoordenadas.add(coordenadaNodo1);
-	    listaCoordenadas.add(coordenadaNodo2);
-	    listaCoordenadas.add(coordenadaNodo1);
+	    listaCoordenadas.add(coordenadaVertice1);
+	    listaCoordenadas.add(coordenadaVertice2);
+	    listaCoordenadas.add(coordenadaVertice1);
 	    
 	    MapPolygonImpl relacion = new MapPolygonImpl(listaCoordenadas);
 	    relacion.setColor(color);
