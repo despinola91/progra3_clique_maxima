@@ -113,6 +113,7 @@ public class Grafo {
         }
 
         Vertice Vertice = new Vertice(_mapeoVertices.size(), nombreVertice, coordenadas, peso);
+        _vertices.add(Vertice);
         _mapeoVertices.put(nombreVertice, Vertice);
 
         int tamanioActual = matrizDeArista.length;
