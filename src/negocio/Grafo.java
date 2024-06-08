@@ -1,14 +1,14 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Grafo {
 
-    private HashMap<String, Vertice> vertices = new HashMap<>();
+    private HashMap<String, Vertice> _mapeoVertices = new HashMap<>();
+    private ArrayList<Vertice> _vertices = new ArrayList<>();
     private ArrayList<Arista> aristas = new ArrayList<>();
     private int[][] matrizDeArista;
     private int[][] matrizDeRegiones;
@@ -29,13 +29,13 @@ public class Grafo {
 	{
 		validarArista(nombreVertice1, nombreVertice2);
 
-        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
-        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
+        int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
 
         matrizDeArista[idVertice1][idVertice2] = 1;
         matrizDeArista[idVertice2][idVertice1] = 1;
 
-        Arista arista = new Arista(vertices.get(nombreVertice1), vertices.get(nombreVertice2));
+        Arista arista = new Arista(_mapeoVertices.get(nombreVertice1), _mapeoVertices.get(nombreVertice2));
         aristas.add(arista);
 	}
 
@@ -46,8 +46,8 @@ public class Grafo {
      */
     public void eliminarArista(String nombreVertice1, String nombreVertice2)
 	{
-        Vertice VerticeA = vertices.get(nombreVertice1);
-        Vertice VerticeB = vertices.get(nombreVertice2);
+        Vertice VerticeA = _mapeoVertices.get(nombreVertice1);
+        Vertice VerticeB = _mapeoVertices.get(nombreVertice2);
 
         int idVertice1 = VerticeA.obtenerId();
         int idVertice2 = VerticeB.obtenerId();
@@ -81,8 +81,8 @@ public class Grafo {
      */
     public boolean existeArista(String nombreVertice1, String nombreVertice2)
 	{
-        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
-        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
+        int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
 
 		return matrizDeArista[idVertice1][idVertice2] > 0;
 	}
@@ -95,8 +95,8 @@ public class Grafo {
      */
     public boolean existeAristaRegiones(String nombreVertice1, String nombreVertice2)
 	{
-        int idVertice1 = vertices.get(nombreVertice1).obtenerId();
-        int idVertice2 = vertices.get(nombreVertice2).obtenerId();
+        int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
+        int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
 
 		return matrizDeRegiones[idVertice1][idVertice2] > 0;
 	}
@@ -106,14 +106,14 @@ public class Grafo {
      * @param nombreVertice
      * @param coordenadas
      */
-    public void agregarVertice (String nombreVertice, Coordinate coordenadas, int peso) {
+    public void agregarVertice (String nombreVertice, Coordinate coordenadas, double peso) {
         
         if (existeVertice(nombreVertice)) {
             throw new IllegalArgumentException("El Vertice ya existe");
         }
 
-        Vertice Vertice = new Vertice(vertices.size(), nombreVertice, coordenadas, peso);
-        vertices.put(nombreVertice, Vertice);
+        Vertice Vertice = new Vertice(_mapeoVertices.size(), nombreVertice, coordenadas, peso);
+        _mapeoVertices.put(nombreVertice, Vertice);
 
         int tamanioActual = matrizDeArista.length;
         int nuevoTamanio = matrizDeArista.length + 1;
@@ -137,7 +137,7 @@ public class Grafo {
             throw new IllegalArgumentException("El Vertice no existe");
         }
         
-        vertices.remove(nombreVertice);
+        _mapeoVertices.remove(nombreVertice);
         int nuevoTamanio = matrizDeArista.length - 1;
         int[][] nuevaMatrizArista = new int[nuevoTamanio][nuevoTamanio];
 
@@ -156,7 +156,7 @@ public class Grafo {
      * @return booleano indicando si el vertice ya existe.
      */
     public boolean existeVertice (String nombreVertice) {
-        return vertices.containsKey(nombreVertice);
+        return _mapeoVertices.containsKey(nombreVertice);
     }
 
     /**
@@ -168,7 +168,7 @@ public class Grafo {
     }
 
     public Vertice obtenerVertice(String nombreVertice) {
-        Vertice nodo = vertices.get(nombreVertice);
+        Vertice nodo = _mapeoVertices.get(nombreVertice);
         return nodo;
     }
 
@@ -177,10 +177,9 @@ public class Grafo {
      * @return  lista de vertices agregadas al grafo.
      */
     public ArrayList<Vertice> obtenerVertices() {
-        ArrayList<String> listaVertices = new ArrayList<>();
-        listaVertices.addAll(vertices.keySet());
-        Collections.sort(listaVertices);
-        
+        // ArrayList<String> listaVertices = new ArrayList<>();
+        // listaVertices.addAll(vertices.keySet());
+        // Collections.sort(listaVertices);
         return _vertices;
     }
 
@@ -190,7 +189,7 @@ public class Grafo {
      * @return objeto Vertice.
      */
     public Vertice obtenerVerticePorNombre(String nombreVertice) {
-        return vertices.get(nombreVertice);
+        return _mapeoVertices.get(nombreVertice);
     }
 
     /**
@@ -200,7 +199,7 @@ public class Grafo {
      */
     public Vertice obtenerVerticePorId(int id) {
         
-        for (Vertice Vertice : vertices.values()) {
+        for (Vertice Vertice : _mapeoVertices.values()) {
             if (Vertice.obtenerId() == id) {
                 return Vertice;
             }
@@ -288,7 +287,7 @@ public class Grafo {
                     Vertice VerticeA = obtenerVerticePorId(i);
                     Vertice VerticeB = obtenerVerticePorId(j);
 
-                    Aristas.add(new Arista(VerticeA, VerticeB, matrizDeRegiones[i][j]));
+                    Aristas.add(new Arista(VerticeA, VerticeB));
                 }
             }
         }
@@ -302,7 +301,7 @@ public class Grafo {
 
         matrizDeArista = new int[0][0];
         matrizDeRegiones = new int[0][0];
-        vertices.clear();
+        _mapeoVertices.clear();
         aristas.clear();
     }
 

@@ -1,6 +1,7 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -56,5 +57,21 @@ public class Vertice {
     	}
     	
         return esVecinoClique;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+            if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertice vertice = (Vertice) o;
+        return _id == vertice._id &&
+                Double.compare(vertice._peso, _peso) == 0 &&
+                Objects.equals(_nombre, vertice._nombre) &&
+                Objects.equals(_coordenadas, vertice._coordenadas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_id, _nombre, _coordenadas, _peso);
     }
 }
