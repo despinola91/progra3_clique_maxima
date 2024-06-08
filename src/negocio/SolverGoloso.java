@@ -22,10 +22,28 @@ public class SolverGoloso {
 		{
 			if (clique.obtenerGrado() == 0) {
 				clique.agregarVertice(vertice);
+			} 
+			else {
+				if(_grafo.verticeVecinoDeTodos(clique.obtenerVertices(), vertice))
+					clique.agregarVertice(vertice);
 			}
+		}
+		
+		return clique;
+	}
 
-			if(vertice.perteneceAClique(clique, _grafo))
+	public Clique resolverConElementoRandom()
+	{
+		Clique clique = new Clique();
+		for(Vertice vertice: verticesOrdenados())
+		{
+			if (clique.obtenerGrado() == 0) {
 				clique.agregarVertice(vertice);
+			} 
+			else {
+				if(_grafo.verticeVecinoDeTodos(clique.obtenerVertices(), vertice))
+					clique.agregarVertice(vertice);
+			}
 		}
 		
 		return clique;

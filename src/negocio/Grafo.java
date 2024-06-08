@@ -29,11 +29,17 @@ public class Grafo {
 	{
 		validarArista(nombreVertice1, nombreVertice2);
 
-        int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
-        int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
+        Vertice verticeA = _mapeoVertices.get(nombreVertice1);
+        Vertice verticeB = _mapeoVertices.get(nombreVertice2);
+        
+        int idVertice1 = verticeA.obtenerId();
+        int idVertice2 = verticeB.obtenerId();
 
         matrizDeArista[idVertice1][idVertice2] = 1;
         matrizDeArista[idVertice2][idVertice1] = 1;
+
+        verticeA.agregarVecino(verticeB);
+        verticeB.agregarVecino(verticeA);
 
         Arista arista = new Arista(_mapeoVertices.get(nombreVertice1), _mapeoVertices.get(nombreVertice2));
         aristas.add(arista);
@@ -46,16 +52,18 @@ public class Grafo {
      */
     public void eliminarArista(String nombreVertice1, String nombreVertice2)
 	{
-        Vertice VerticeA = _mapeoVertices.get(nombreVertice1);
-        Vertice VerticeB = _mapeoVertices.get(nombreVertice2);
+        Vertice verticeA = _mapeoVertices.get(nombreVertice1);
+        Vertice verticeB = _mapeoVertices.get(nombreVertice2);
 
-        int idVertice1 = VerticeA.obtenerId();
-        int idVertice2 = VerticeB.obtenerId();
+        int idvertice1 = verticeA.obtenerId();
+        int idvertice2 = verticeB.obtenerId();
 
-		matrizDeArista[idVertice1][idVertice2] = 0;
-        matrizDeArista[idVertice2][idVertice1] = 0;
+		matrizDeArista[idvertice1][idvertice2] = 0;
+        matrizDeArista[idvertice2][idvertice1] = 0;
         
-        aristas.remove(Arista.obtenerArista(aristas, VerticeA, VerticeB));
+        aristas.remove(Arista.obtenerArista(aristas, verticeA, verticeB));
+        verticeA.eliminarVecino(verticeB);
+        verticeB.eliminarVecino(verticeA);
 	}
 
     /**
@@ -113,6 +121,7 @@ public class Grafo {
         }
 
         Vertice Vertice = new Vertice(_mapeoVertices.size(), nombreVertice, coordenadas, peso);
+        _vertices.add(Vertice);
         _mapeoVertices.put(nombreVertice, Vertice);
 
         int tamanioActual = matrizDeArista.length;
@@ -315,4 +324,13 @@ public class Grafo {
 		
 		return verticesVecinos;
 	}
+
+    public boolean verticeVecinoDeTodos(ArrayList<Vertice> vertices, Vertice nuevoVertice) {
+        for(Vertice vertice: vertices) {
+            if (!existeArista(vertice.obtenerNombre(), nuevoVertice.obtenerNombre())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
