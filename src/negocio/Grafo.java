@@ -253,16 +253,6 @@ public class Grafo {
     public int[][] obtenerMatrizArista() {
         return matrizDeArista;
     }
-
-    /**
-     * Indica si el grafo es conexo utilizando BFS.
-     * @param matriz
-     * @return booleano indicando si el grafo es conexo o no.
-     */
-    public boolean esGrafoConexo(int[][] matriz) {
-        
-        return BFS.grafoEsConexo(matriz);
-    }
     
     /**
      * Obtiene lista de Aristaes creadas hasta el momento por el usuario.
