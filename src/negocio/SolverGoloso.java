@@ -32,6 +32,23 @@ public class SolverGoloso {
 		return clique;
 	}
 
+	public Clique resolverConElementoRandom()
+	{
+		Clique clique = new Clique();
+		for(Vertice vertice: verticesOrdenados())
+		{
+			if (clique.obtenerGrado() == 0) {
+				clique.agregarVertice(vertice);
+			} 
+			else {
+				if(_grafo.verticeVecinoDeTodos(clique.obtenerVertices(), vertice))
+					clique.agregarVertice(vertice);
+			}
+		}
+		
+		return clique;
+	}
+
 	private ArrayList<Vertice> verticesOrdenados()
 	{
 		ArrayList<Vertice> vertices = _grafo.obtenerVertices();
