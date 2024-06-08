@@ -48,7 +48,7 @@ public class MainForm
 	private JComboBox<String> comboBox_Vertice2;
 	private JComboBox<String> comboBox_Vertice1;
 	private JComboBox<String> comboBox_Algoritmo;
-	private JButton btnReset;
+	//private JButton btnReset;
 	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
@@ -130,7 +130,7 @@ public class MainForm
 		cargarRelaciones();
 		//dividirRegiones();
 		mostrarRelaciones(false);
-		reset();
+		//reset();
 	}
 	
 	private void detectarCoordenadas() 
@@ -310,21 +310,21 @@ public class MainForm
 	    }
 	}
 	
-	private void reset() {   
-	    btnReset.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent arg0) {
-	            _grafo.removeAllMapMarkers();
-	            _grafo.removeAllMapPolygons();
-	            grafo.reiniciarGrafo();
-	      
-				cargarDesplegablesVertices();
-
-				btnUnirVertices.setEnabled(true);
-				btnEliminarUnion.setEnabled(true);
-				textCantidadRegiones.setText(null);
-	        }
-	    });
-	}
+//	private void reset() {   
+//	    btnReset.addActionListener(new ActionListener() {
+//	        public void actionPerformed(ActionEvent arg0) {
+//	            _grafo.removeAllMapMarkers();
+//	            _grafo.removeAllMapPolygons();
+//	            grafo.reiniciarGrafo();
+//	      
+//				cargarDesplegablesVertices();
+//
+//				btnUnirVertices.setEnabled(true);
+//				btnEliminarUnion.setEnabled(true);
+//				textCantidadRegiones.setText(null);
+//	        }
+//	    });
+//	}
 
 	private void cargarDesplegablesVertices() {
 		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
