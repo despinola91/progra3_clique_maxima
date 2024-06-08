@@ -327,7 +327,15 @@ public class MainForm
 //	}
 
 	private void cargarDesplegablesVertices() {
-		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
-		comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
-	}	
+	    ArrayList<Vertice> vertices = grafo.obtenerVertices();
+	    String[] nombresVertices = new String[vertices.size()];
+	    
+	    for (int i = 0; i < vertices.size(); i++) {
+	        nombresVertices[i] = vertices.get(i).obtenerNombre();
+	    }
+
+	    comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(nombresVertices));
+	    comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(nombresVertices));
+	}
+
 }
