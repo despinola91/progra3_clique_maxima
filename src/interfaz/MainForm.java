@@ -109,7 +109,7 @@ public class MainForm
 		
 		_grafo = new JMapViewer();
 		_grafo.setCenter(new Point(1075, 700));
-		_grafo.setDisplayPosition(new Coordinate(-41.362952, -33.382671), 4);
+		_grafo.setDisplayPosition(new Coordinate(-41.362952, -33.382671), 9);
 		_grafo.setPreferredSize(new Dimension(437, 512));
 				
 		panelgrafo.add(_grafo);
