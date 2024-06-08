@@ -156,7 +156,7 @@ public class MainForm
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
-					cargarDesplegablesNodos();
+					cargarDesplegablesVertices();
 				}
 			}}
 		});
@@ -186,41 +186,14 @@ public class MainForm
 	    _grafo.addMapPolygon(relacion);
 	}
 	
-	private void dividirRegiones() {
-		
-	    JLabel lblTituloRegiones = new JLabel("Creacion de regiones");
-	    lblTituloRegiones.setFont(new Font("Tahoma", Font.ITALIC, 16));
-	    lblTituloRegiones.setBounds(25, 11, 208, 22);
-	    panelControlRegiones.add(lblTituloRegiones);
-	    
-	    JLabel lblRegiones = new JLabel("Regiones");
-	    lblRegiones.setBounds(25, 54, 66, 23);
-	    panelControlRegiones.add(lblRegiones);
-	    
-	    textCantidadRegiones = new JTextPane();
-	    textCantidadRegiones.setBounds(133, 54, 62, 22);
-	    panelControlRegiones.add(textCantidadRegiones);
-	    
-	    JLabel lblAlgoritmo = new JLabel("Algoritmo");
-	    lblAlgoritmo.setBounds(25, 97, 86, 23);
-	    panelControlRegiones.add(lblAlgoritmo);
-	    
-	    comboBox_Algoritmo = new JComboBox();
-	    comboBox_Algoritmo.setToolTipText("");
-	    comboBox_Algoritmo.setBounds(133, 97, 138, 22);
-	    panelControlRegiones.add(comboBox_Algoritmo);
-
-	    
-	}
-	
 	private void cargarRelaciones() {
 	    
-	    comboBox_Vertice1 = new JComboBox();
+	    comboBox_Vertice1 = new JComboBox<String>();
 	    comboBox_Vertice1.setToolTipText("");
 	    comboBox_Vertice1.setBounds(141, 57, 138, 22);
 	    panelControlRelaciones.add(comboBox_Vertice1);
 	    
-	    comboBox_Vertice2 = new JComboBox();
+	    comboBox_Vertice2 = new JComboBox<String>();
 	    comboBox_Vertice2.setBounds(141, 91, 138, 22);
 	    panelControlRelaciones.add(comboBox_Vertice2);
 	    
@@ -281,7 +254,7 @@ public class MainForm
 	    lblTituloGrafo.setBounds(25, 12, 208, 22);
 	    panelControlRelaciones.add(lblTituloGrafo);
 	    
-	    JComboBox comboBox_Criterio = new JComboBox();
+	    JComboBox<String> comboBox_Criterio = new JComboBox<String>();
 	    comboBox_Criterio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 	    comboBox_Criterio.setBounds(24, 217, 120, 22);
 	    panelControlRelaciones.add(comboBox_Criterio);
@@ -316,17 +289,6 @@ public class MainForm
 		}
 	}
 
-	private void dibujarRegiones(int[][] matrizDeRelacion) {
-		_grafo.removeAllMapPolygons();
-		for (int i = 0; i < matrizDeRelacion.length; i++) {
-			for (int j = 0; j < matrizDeRelacion.length; j++) {  
-				if (matrizDeRelacion[i][j] > 0) {
-					dibujarAristaRegiones(grafo.obtenerVerticePorId(i).obtenerCoordenadas(), grafo.obtenerVerticePorId(j).obtenerCoordenadas(), Color.RED);
-				}
-			}
-		}
-	}
-
 	private void mostrarRelaciones(boolean soloRegiones) {
 		
 	    String[] columnas = {"Origen", "Destino", "Similaridad"};
@@ -356,7 +318,7 @@ public class MainForm
 	            _grafo.removeAllMapPolygons();
 	            grafo.reiniciarGrafo();
 	      
-				cargarDesplegablesNodos();
+				cargarDesplegablesVertices();
 
 				btnUnirVertices.setEnabled(true);
 				btnEliminarUnion.setEnabled(true);
@@ -366,7 +328,7 @@ public class MainForm
 	    });
 	}
 
-	private void cargarDesplegablesNodos() {
+	private void cargarDesplegablesVertices() {
 		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
 		comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
 	}	
