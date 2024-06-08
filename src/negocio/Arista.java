@@ -14,4 +14,9 @@ public class Arista {
     public ArrayList<Vertice> obtenerVertices() {
         return this._vertices;
     }
+
+	public static Object obtenerArista(ArrayList<Arista> aristas, Vertice verticeA, Vertice verticeB) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

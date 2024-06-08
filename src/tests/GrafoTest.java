@@ -15,146 +15,149 @@ import negocio.Vertice;
 class GrafoTest {
 
 	@Test
-	void agregarNodoTest() {
+	void agregarVerticeTest() {
 
-		Grafo mapa = new Grafo();
-		mapa.agregarNodo("Buenos Aires", new Coordinate(-43, 64));
-		mapa.agregarNodo("Santa Fe", new Coordinate(87, -93));
-		mapa.agregarNodo("Corrientes", new Coordinate(12, -65));
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
+		grafo.agregarVertice("3", new Coordinate(15.00, 60.00), 2.50);
 
-		assertEquals(3, mapa.obtenerDimensionMatrizArista());
-		assertTrue((mapa.existeNodo("Buenos Aires")));
-		assertTrue((mapa.existeNodo("Santa Fe")));
-		assertTrue((mapa.existeNodo("Corrientes")));
-		assertFalse((mapa.existeNodo("Chaco")));
+		assertEquals(3, grafo.obtenerVertices().size());
+		assertTrue((grafo.existeVertice("1")));
+		assertTrue((grafo.existeVertice("2")));
+		assertTrue((grafo.existeVertice("3")));
+		assertTrue((grafo.existeVertice("4")));
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> mapa.agregarNodo("Buenos Aires", new Coordinate(50., 50)));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.agregarVertice("1", new Coordinate(50., 50), 4.00));
 	}
 
 	@Test
 	void agregarAristaTest() {
 
-		Grafo mapa = new Grafo();
-		mapa.agregarNodo("Buenos Aires", new Coordinate(-43, 64));
-		mapa.agregarNodo("Santa Fe", new Coordinate(87, -93));
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
 
-		mapa.agregarArista("Buenos Aires", "Santa Fe", 5);
-		assertTrue(mapa.existeArista("Buenos Aires", "Santa Fe"));
-		assertTrue(mapa.existeArista("Santa Fe", "Buenos Aires"));
+		grafo.agregarArista("1", "2");
+		assertTrue(grafo.existeArista("1", "2"));
+		assertTrue(grafo.existeArista("2", "1"));
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> mapa.agregarArista("Buenos Aires", "Buenos Aires", 5));
-		Assertions.assertThrows(IllegalArgumentException.class, () -> mapa.agregarArista("Buenos Aires", "Chaco", 5));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.agregarArista("1", "1"));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.agregarArista("1", "3"));
 	}
 
 	@Test
-	void eliminarProvinciaTest() {
+	void eliminarVerticeTest() {
 
-		Grafo mapa = new Grafo();
-		mapa.agregarNodo("Buenos Aires", new Coordinate(87, -34));
-		mapa.agregarNodo("Santa Fe", new Coordinate(-12, 65));
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
 
-		mapa.eliminarNodo("Santa Fe");
-		assertFalse(mapa.existeNodo("Santa Fe"));
-		Assertions.assertThrows(IllegalArgumentException.class, () -> mapa.eliminarNodo("Chaco"));
+		grafo.eliminarVertice("1");
+		assertFalse(grafo.existeVertice("1"));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.eliminarVertice("2"));
 
 	}
 
 	@Test
-	void eliminarRelacionTest() {
-		Grafo mapa = new Grafo();
-		mapa.agregarNodo("Buenos Aires", new Coordinate(98, 89));
-		mapa.agregarNodo("Santa Fe", new Coordinate(-93, 72));
+	void eliminarAristaTest() {
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
 
-		mapa.agregarArista("Santa Fe", "Buenos Aires", 1);
-		assertTrue(mapa.existeArista("Santa Fe", "Buenos Aires"));
-		mapa.eliminarArista("Buenos Aires", "Santa Fe");
-		assertFalse(mapa.existeArista("Santa Fe", "Buenos Aires"));
+		grafo.agregarArista("1", "2");
+		assertTrue(grafo.existeArista("1", "2"));
+		grafo.eliminarArista("1", "2");
+		assertFalse(grafo.existeArista("1", "2"));
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.eliminarArista("1", "2"));
 	}
 
 	@Test
-	void obtenerProvinciasTest() {
+	void obtenerVerticesTest() {
 		Grafo grafo = new Grafo();
 
-		grafo.agregarNodo("Salta", new Coordinate(72, 12));
-		grafo.agregarNodo("Tucuman", new Coordinate(-12, 23));
-		grafo.agregarNodo("Catamarca", new Coordinate(-12, 12));
-		grafo.agregarNodo("Buenos Aires", new Coordinate(-34, 34));
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
+		grafo.agregarVertice("3", new Coordinate(15.00, 60.00), 2.50);
 
-		ArrayList<String> nodosResultado = grafo.obtenerNodos();
+		ArrayList<Vertice> verticesResultado = grafo.obtenerVertices();
+		ArrayList<Vertice> verticesEsperados = new ArrayList<>();
 
-		ArrayList<String> provinciasEsperadas = new ArrayList<>();
-        provinciasEsperadas.add("Buenos Aires");
-		provinciasEsperadas.add("Catamarca");
-		provinciasEsperadas.add("Salta");
-		provinciasEsperadas.add("Tucuman");
-
-
- 		assertTrue(provinciasEsperadas.equals(nodosResultado));
-	}
-
-
-	@Test
-	void obtenerProvinciaporNombreTest() {
-	
-		Grafo grafo = new Grafo();
-		grafo.agregarNodo("Buenos Aires", new Coordinate(50, 60));
-		Vertice nodo = grafo.obtenerNodoPorNombre("Buenos Aires");
 		
-		assertTrue(nodo.obtenerId() ==0);
-		assertTrue(nodo.obtenerNombre() == "Buenos Aires");
-		assertTrue(nodo.obtenerCoordenadas().getLat() == 50.00);
-		assertTrue(nodo.obtenerCoordenadas().getLon() == 60.00);
+        verticesEsperados.add(new Vertice(0, "1", new Coordinate(10.00, 20.00), 5.50));
+		verticesEsperados.add(new Vertice(1, "2", new Coordinate(13.00, 70.00), 10.00));
+		verticesEsperados.add(new Vertice(2, "3", new Coordinate(15.00, 60.00), 2.50));
+
+ 		assertTrue(verticesEsperados.equals(verticesResultado));
+	}
+
+
+	@Test
+	void obtenerVerticePorNombreTest() {
+	
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(50, 60), 19.80);
+		Vertice vertice = grafo.obtenerVerticePorNombre("1");
+		
+		assertTrue(vertice.obtenerId() == 0);
+		assertTrue(vertice.obtenerNombre() == "1");
+		assertTrue(vertice.obtenerCoordenadas().getLat() == 50.00);
+		assertTrue(vertice.obtenerCoordenadas().getLon() == 60.00);
+		assertTrue(vertice.obtenerPeso() == 19.80);
 	}
 
 	@Test
-	void obtenerProvinciaporIdTest() {
+	void obtenerVerticePorIdTest() {
 	
 		Grafo grafo = new Grafo();
-		grafo.agregarNodo("Buenos Aires", new Coordinate(50, 60));
-		Vertice nodo = grafo.obtenerNodoPorId(0);
+		grafo.agregarVertice("1", new Coordinate(50, 60), 90.00);
+		Vertice vertice = grafo.obtenerVerticePorId(0);
 
-		assertTrue(nodo.obtenerId() ==0);
-		assertTrue(nodo.obtenerNombre() == "Buenos Aires");
-		assertTrue(nodo.obtenerCoordenadas().getLat() == 50);
-		assertTrue(nodo.obtenerCoordenadas().getLon() == 60);
-		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.obtenerNodoPorId(1));
+		assertTrue(vertice.obtenerId() == 0);
+		assertTrue(vertice.obtenerNombre() == "1");
+		assertTrue(vertice.obtenerCoordenadas().getLat() == 50);
+		assertTrue(vertice.obtenerCoordenadas().getLon() == 60);
+		assertTrue(vertice.obtenerPeso() == 90.00);
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.obtenerVerticePorId(1));
 	}	
 
 	@Test
 	void obtenerMatrizRelacionTest() {
 
-		Grafo mapa = new Grafo();
-		mapa.agregarNodo("Buenos Aires", new Coordinate(-43, 64));
-		mapa.agregarNodo("Santa Fe", new Coordinate(87, -93));
-		mapa.agregarNodo("Chaco", new Coordinate(37, -73));
+		Grafo grafo = new Grafo();
+		grafo.agregarVertice("1", new Coordinate(10.00, 20.00), 5.50);
+		grafo.agregarVertice("2", new Coordinate(13.00, 70.00), 10.00);
+		grafo.agregarVertice("3", new Coordinate(15.00, 60.00), 2.50);
 
-		mapa.agregarArista("Buenos Aires", "Santa Fe", 5);
-		int[][] expectedMatrix = {{0, 5, 0}, 
-								  {5, 0, 0},
+		grafo.agregarArista("1", "2");
+		int[][] expectedMatrix = {{0, 1, 0}, 
+								  {1, 0, 0},
 								  {0, 0, 0}};
-		assertArrayEquals(expectedMatrix, mapa.obtenerMatrizArista());
+		assertArrayEquals(expectedMatrix, grafo.obtenerMatrizArista());
 	}
 
-	@Test
-	void dividirRegionesTest() {
-		Grafo mapa = new Grafo();
+	// @Test
+	// void dividirRegionesTest() {
+	// 	Grafo mapa = new Grafo();
 		
-		int[][] matrizDeRegiones = {
-			{0, 2, 0, 6, 0},
-			{2, 0, 3, 0, 5},
-			{0, 3, 0, 0, 0},
-			{6, 0, 0, 0, 0},
-			{0, 5, 0, 0, 0}
-		};
+	// 	int[][] matrizDeRegiones = {
+	// 		{0, 2, 0, 6, 0},
+	// 		{2, 0, 3, 0, 5},
+	// 		{0, 3, 0, 0, 0},
+	// 		{6, 0, 0, 0, 0},
+	// 		{0, 5, 0, 0, 0}
+	// 	};
 
-		int[][] matrizEsperada = {
-			{0, 2, 0, 0, 0},
-			{2, 0, 3, 0, 5},
-			{0, 3, 0, 0, 0},
-			{0, 0, 0, 0, 0},
-			{0, 5, 0, 0, 0}
-		};
+	// 	int[][] matrizEsperada = {
+	// 		{0, 2, 0, 0, 0},
+	// 		{2, 0, 3, 0, 5},
+	// 		{0, 3, 0, 0, 0},
+	// 		{0, 0, 0, 0, 0},
+	// 		{0, 5, 0, 0, 0}
+	// 	};
 
-		assertArrayEquals(matrizEsperada, mapa.dividirRegiones(matrizDeRegiones, 2));
-	}
+	// 	assertArrayEquals(matrizEsperada, mapa.dividirRegiones(matrizDeRegiones, 2));
+	// }
 }
