@@ -26,7 +26,7 @@ class GrafoTest {
 		assertTrue((grafo.existeVertice("1")));
 		assertTrue((grafo.existeVertice("2")));
 		assertTrue((grafo.existeVertice("3")));
-		assertTrue((grafo.existeVertice("4")));
+		assertFalse((grafo.existeVertice("4")));
 
 		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.agregarVertice("1", new Coordinate(50., 50), 4.00));
 	}
@@ -55,7 +55,7 @@ class GrafoTest {
 
 		grafo.eliminarVertice("1");
 		assertFalse(grafo.existeVertice("1"));
-		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.eliminarVertice("2"));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> grafo.eliminarVertice("1"));
 
 	}
 
