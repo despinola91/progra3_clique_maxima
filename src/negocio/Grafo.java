@@ -310,7 +310,20 @@ public class Grafo {
 		return this.indiceConVecinos;
 	}
 
-
-
-
+	public ArrayList<Vertice> obtenerVecinosPorNombre(String nombre) {
+		Vertice vertice = this.obtenerVerticePorNombre(nombre);
+		
+		if(vertice == null) {
+			throw new Error("Vertice no existente en grafo");
+		}
+		
+		int[] arrayIdVecinos = this.matrizDeArista[vertice.obtenerId()];
+		ArrayList<Vertice> verticesVecinos = new ArrayList<Vertice>();
+		
+		for(int idVecino : arrayIdVecinos) {
+			verticesVecinos.add(this.obtenerVerticePorId(idVecino));
+		}
+		
+		return verticesVecinos;
+	}
 }

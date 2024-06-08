@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.ArrayList;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Vertice {
@@ -37,9 +39,22 @@ public class Vertice {
         Integer grado = 0;
         return grado;
     }
-
-    public boolean perteneceAClique(Clique clique, Grafo _grafo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'perteneceAClique'");
+    
+    /**
+     * Obtiene los vecinos del vertice en el grafo, compara con vertices de clique, si vertice de clique no es vecino, retorna false
+     * @return boolean indicador de pertenencia a clique
+     */
+    public boolean perteneceAClique(Clique clique, Grafo grafo) {
+    	ArrayList<Vertice> vecinosGrafo = grafo.obtenerVecinosPorNombre(this._nombre);
+    	ArrayList<Vertice> verticesClique = clique.obtenerVertices();
+    	Boolean esVecinoClique = true;
+    	
+    	for(Vertice verticeClique : verticesClique) {
+    		if(vecinosGrafo.contains(verticeClique) == false) {
+    			esVecinoClique = false;
+    		}
+    	}
+    	
+        return esVecinoClique;
     }
 }
