@@ -138,26 +138,4 @@ class GrafoTest {
 		assertArrayEquals(expectedMatrix, grafo.obtenerMatrizArista());
 	}
 
-	// @Test
-	// void dividirRegionesTest() {
-	// 	Grafo mapa = new Grafo();
-		
-	// 	int[][] matrizDeRegiones = {
-	// 		{0, 2, 0, 6, 0},
-	// 		{2, 0, 3, 0, 5},
-	// 		{0, 3, 0, 0, 0},
-	// 		{6, 0, 0, 0, 0},
-	// 		{0, 5, 0, 0, 0}
-	// 	};
-
-	// 	int[][] matrizEsperada = {
-	// 		{0, 2, 0, 0, 0},
-	// 		{2, 0, 3, 0, 5},
-	// 		{0, 3, 0, 0, 0},
-	// 		{0, 0, 0, 0, 0},
-	// 		{0, 5, 0, 0, 0}
-	// 	};
-
-	// 	assertArrayEquals(matrizEsperada, mapa.dividirRegiones(matrizDeRegiones, 2));
-	// }
 }
