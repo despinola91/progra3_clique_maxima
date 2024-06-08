@@ -12,7 +12,6 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import negocio.Grafo;
-import negocio.Vertice;
 import negocio.Arista;
 
 import javax.swing.JButton;
@@ -45,8 +44,8 @@ public class MainForm
 	private JPanel panelControlRelaciones;
 	private JPanel panelControlRegiones;
 
-	private JComboBox<String> comboBox_Nodo2;
-	private JComboBox<String> comboBox_Nodo1;
+	private JComboBox<String> comboBox_Vertice2;
+	private JComboBox<String> comboBox_Vertice1;
 	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
 	private JTextPane textCantidadRegiones;
@@ -56,7 +55,7 @@ public class MainForm
 	
 	private Grafo grafo;
 
-	private JButton btnUnirNodos;
+	private JButton btnUnirVertices;
 	private JButton btnEliminarUnion;
 
 	/**
@@ -143,12 +142,14 @@ public class MainForm
 			if (e.getButton() == MouseEvent.BUTTON1)
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = JOptionPane.showInputDialog("Nombre Nodo: ");
-				
-				
-				if (nombre != null && !nombre.isEmpty()) {
+				String nombre = JOptionPane.showInputDialog("Nombre Vertice: ");
+				String pesoString = JOptionPane.showInputDialog("Peso Vertice: ");
+				int peso;
+				peso = Integer.parseInt(pesoString);
+
+				if (nombre != null && !nombre.isEmpty() && peso != 0) {
 					try {
-						grafo.agregarVertice(nombre, coordenadas, 1);  //falta agregar el peso
+						grafo.agregarVertice(nombre, coordenadas, peso);
 						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -245,39 +246,39 @@ public class MainForm
 	
 	private void cargarRelaciones() {
 	    
-	    comboBox_Nodo1 = new JComboBox();
-	    comboBox_Nodo1.setToolTipText("Nodo");
-	    comboBox_Nodo1.setBounds(141, 57, 138, 22);
-	    panelControlRelaciones.add(comboBox_Nodo1);
+	    comboBox_Vertice1 = new JComboBox();
+	    comboBox_Vertice1.setToolTipText("");
+	    comboBox_Vertice1.setBounds(141, 57, 138, 22);
+	    panelControlRelaciones.add(comboBox_Vertice1);
 	    
-	    comboBox_Nodo2 = new JComboBox();
-	    comboBox_Nodo2.setBounds(141, 91, 138, 22);
-	    panelControlRelaciones.add(comboBox_Nodo2);
+	    comboBox_Vertice2 = new JComboBox();
+	    comboBox_Vertice2.setBounds(141, 91, 138, 22);
+	    panelControlRelaciones.add(comboBox_Vertice2);
 	    
-	    JLabel lblNodo1 = new JLabel("Nodo 1");
-	    lblNodo1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    lblNodo1.setBounds(25, 56, 62, 23);
-	    panelControlRelaciones.add(lblNodo1);
+	    JLabel lblVertice1 = new JLabel("Vertice 1");
+	    lblVertice1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblVertice1.setBounds(25, 56, 62, 23);
+	    panelControlRelaciones.add(lblVertice1);
 	    
-	    JLabel lblNodo2 = new JLabel("Nodo 2");
-	    lblNodo2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    lblNodo2.setBounds(25, 90, 62, 23);
-	    panelControlRelaciones.add(lblNodo2);
+	    JLabel lblVertice2 = new JLabel("Vertice 2");
+	    lblVertice2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblVertice2.setBounds(25, 90, 62, 23);
+	    panelControlRelaciones.add(lblVertice2);
 	    
-	    btnUnirNodos = new JButton("Unir Nodos");
-	    btnUnirNodos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnUnirNodos.addActionListener(new ActionListener() {
+	    btnUnirVertices = new JButton("Unir Vertices");
+	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnirVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();	            
-				String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
+				String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();	            
+				String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
 
 				try {
-					if (!nombreNodo1.equals(nombreNodo2)) {
-						grafo.agregarArista(nombreNodo1, nombreNodo2);
+					if (!nombreVertice1.equals(nombreVertice2)) {
+						grafo.agregarArista(nombreVertice1, nombreVertice2);
 						dibujargrafo(grafo.obtenerMatrizArista());
 						mostrarRelaciones(false);
 					} else {
-						JOptionPane.showMessageDialog(null, "Los dos Nodos seleccionadas son iguales, por favor seleccione Nodos diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionadas son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				catch (NumberFormatException ex) {
@@ -288,17 +289,17 @@ public class MainForm
 				}
 			}
 		});
-	    btnUnirNodos.setBounds(10, 140, 134, 23);
-	    panelControlRelaciones.add(btnUnirNodos);
+	    btnUnirVertices.setBounds(10, 140, 134, 23);
+	    panelControlRelaciones.add(btnUnirVertices);
 	    
 	    btnEliminarUnion = new JButton("Eliminar Union");
 	    btnEliminarUnion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEliminarUnion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            String nombreNodo1 = comboBox_Nodo1.getSelectedItem().toString();            
-	            String nombreNodo2 = comboBox_Nodo2.getSelectedItem().toString();
+	            String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();            
+	            String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
 	            
-	            grafo.eliminarArista(nombreNodo1, nombreNodo2);
+	            grafo.eliminarArista(nombreVertice1, nombreVertice2);
 				dibujargrafo(grafo.obtenerMatrizArista());
 				mostrarRelaciones(false);
 	        }
@@ -340,7 +341,7 @@ public class MainForm
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarArista(grafo.obtenerVerticePorId(i).obtenerCoordenadas(), grafo.obtenerVerticePorId(j).obtenerCoordenadas());
+					dibujarArista(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas());
 				}
 			}
 		}
@@ -351,7 +352,7 @@ public class MainForm
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarAristaRegiones(grafo.obtenerVerticePorId(i).obtenerCoordenadas(), grafo.obtenerVerticePorId(j).obtenerCoordenadas(), Color.RED);
+					dibujarAristaRegiones(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas(), Color.RED);
 				}
 			}
 		}
@@ -371,8 +372,8 @@ public class MainForm
 		}
 
 	    for (Arista arista : aristas) {
-	        Vertice nodoA = arista.obtenerVertices().get(0);
-	        Vertice nodoB = arista.obtenerVertices().get(1);
+	        Nodo nodoA = arista.obtenerNodos().get(0);
+	        Nodo nodoB = arista.obtenerNodos().get(1);
 	        int peso = arista.obtenerRelacion();
 	        Object[] fila = {nodoA.obtenerNombre(), nodoB.obtenerNombre(), peso};
 	        modelo.addRow(fila);
@@ -388,7 +389,7 @@ public class MainForm
 	      
 				cargarDesplegablesNodos();
 
-				btnUnirNodos.setEnabled(true);
+				btnUnirVertices.setEnabled(true);
 				btnEliminarUnion.setEnabled(true);
 				textSimilitud.setText(null);
 				textCantidadRegiones.setText(null);
@@ -397,7 +398,7 @@ public class MainForm
 	}
 
 	private void cargarDesplegablesNodos() {
-		comboBox_Nodo1.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
-		comboBox_Nodo2.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
+		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
+		comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
 	}	
 }
