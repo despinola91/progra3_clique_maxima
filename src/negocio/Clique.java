@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Clique {
 
 	ArrayList<Vertice> _vertices;
-	private int _peso;
+	private double _peso;
 
 	public Clique() {
 		_vertices = new ArrayList<Vertice>();
@@ -16,10 +16,7 @@ public class Clique {
 		return _vertices;
 	}
 
-	public int obtenerPeso() {
-		for (Vertice vertice :_vertices) {
-			_peso += vertice.obtenerPeso();
-		}
+	public double obtenerPeso() {		
 		return _peso;
 	}
 
@@ -29,5 +26,6 @@ public class Clique {
 
     public void agregarVertice(Vertice vertice) {
         _vertices.add(vertice);
+		_peso += vertice.obtenerPeso();
     }
 }

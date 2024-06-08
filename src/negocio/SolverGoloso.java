@@ -22,10 +22,11 @@ public class SolverGoloso {
 		{
 			if (clique.obtenerGrado() == 0) {
 				clique.agregarVertice(vertice);
+			} 
+			else {
+				if(_grafo.verticeVecinoDeTodos(clique.obtenerVertices(), vertice))
+					clique.agregarVertice(vertice);
 			}
-
-			if(vertice.perteneceAClique(clique, _grafo))
-				clique.agregarVertice(vertice);
 		}
 		
 		return clique;

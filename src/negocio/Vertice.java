@@ -1,7 +1,9 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -11,12 +13,14 @@ public class Vertice {
     private String _nombre;
     private Coordinate _coordenadas;
     private double _peso;
+    private Set<Vertice> _vecinos;
     
     public Vertice(int id, String nombre, Coordinate coordenadas, double peso) {
         this._id = id;
         this._nombre = nombre;
         this._coordenadas = coordenadas;
         this._peso = peso;
+        _vecinos = new HashSet<>();
     }
 
     public int obtenerId() {
@@ -35,10 +39,8 @@ public class Vertice {
 		return _peso;
 	}
 
-    public Integer obtenerGrado() {
-        // TODO Auto-generated method stub
-        Integer grado = 0;
-        return grado;
+    public int obtenerGrado() {
+        return _vecinos.size();
     }
     
     /**
@@ -73,5 +75,13 @@ public class Vertice {
     @Override
     public int hashCode() {
         return Objects.hash(_id, _nombre, _coordenadas, _peso);
+    }
+
+    public void agregarVecino(Vertice vertice) {
+        _vecinos.add(vertice);
+    }
+
+    public void eliminarVecino(Vertice vertice) {
+        _vecinos.remove(vertice);
     }
 }
