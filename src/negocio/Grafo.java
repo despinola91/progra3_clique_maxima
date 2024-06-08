@@ -305,21 +305,21 @@ public class Grafo {
     }
 
 	public HashMap<Integer, ArrayList<Vertice>> obtenerIndiceConVecinos() {
-		return this.indiceConVecinos;
+		return indiceConVecinos;
 	}
 
 	public ArrayList<Vertice> obtenerVecinosPorNombre(String nombre) {
-		Vertice vertice = this.obtenerVerticePorNombre(nombre);
+		Vertice vertice = obtenerVerticePorNombre(nombre);
 		
 		if(vertice == null) {
 			throw new Error("Vertice no existente en grafo");
 		}
 		
-		int[] arrayIdVecinos = this.matrizDeArista[vertice.obtenerId()];
+		int[] arrayIdVecinos = matrizDeArista[vertice.obtenerId()];
 		ArrayList<Vertice> verticesVecinos = new ArrayList<Vertice>();
 		
 		for(int idVecino : arrayIdVecinos) {
-			verticesVecinos.add(this.obtenerVerticePorId(idVecino));
+			verticesVecinos.add(obtenerVerticePorId(idVecino));
 		}
 		
 		return verticesVecinos;

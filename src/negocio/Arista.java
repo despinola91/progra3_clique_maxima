@@ -7,16 +7,25 @@ public class Arista {
     ArrayList<Vertice> _vertices = new ArrayList<>();
 
     public Arista(Vertice verticeA, Vertice verticeB) {
-        this._vertices.add(verticeA);
-        this._vertices.add(verticeB);
+        _vertices.add(verticeA);
+        _vertices.add(verticeB);
     }
 
     public ArrayList<Vertice> obtenerVertices() {
-        return this._vertices;
+        return _vertices;
     }
 
-    public static Object obtenerArista(ArrayList<Arista> aristas, Vertice verticeA, Vertice verticeB) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerArista'");
+    public static Arista obtenerArista(ArrayList<Arista> aristas, Vertice verticeA, Vertice verticeB) {
+        ArrayList<Vertice> vertices = new ArrayList<>();
+        vertices.add(verticeA);
+        vertices.add(verticeB);
+
+        for (Arista arista : aristas) {
+
+            if (arista.obtenerVertices().containsAll(vertices)) {
+                return arista;
+            }
+        }
+        return null;
     }
 }
