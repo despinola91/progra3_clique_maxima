@@ -16,10 +16,10 @@ public class Vertice {
     private Set<Vertice> _vecinos;
     
     public Vertice(int id, String nombre, Coordinate coordenadas, double peso) {
-        this._id = id;
-        this._nombre = nombre;
-        this._coordenadas = coordenadas;
-        this._peso = peso;
+        _id = id;
+        _nombre = nombre;
+        _coordenadas = coordenadas;
+        _peso = peso;
         _vecinos = new HashSet<>();
     }
 
@@ -48,7 +48,7 @@ public class Vertice {
      * @return boolean indicador de pertenencia a clique
      */
     public boolean perteneceAClique(Clique clique, Grafo grafo) {
-    	ArrayList<Vertice> vecinosGrafo = grafo.obtenerVecinosPorNombre(this._nombre);
+    	ArrayList<Vertice> vecinosGrafo = grafo.obtenerVecinosPorNombre(_nombre);
     	ArrayList<Vertice> verticesClique = clique.obtenerVertices();
     	Boolean esVecinoClique = true;
     	

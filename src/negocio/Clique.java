@@ -9,7 +9,7 @@ public class Clique {
 
 	public Clique() {
 		_vertices = new ArrayList<Vertice>();
-		this._peso = 0;
+		_peso = 0;
 	}
 
 	public ArrayList<Vertice> obtenerVertices() {
@@ -21,7 +21,7 @@ public class Clique {
 	}
 
 	public int obtenerGrado() {
-		return this._vertices.size();
+		return _vertices.size();
 	}
 
     public void agregarVertice(Vertice vertice) {
