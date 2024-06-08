@@ -1,6 +1,5 @@
 package negocio;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +22,22 @@ public class Vertice {
         _vecinos = new HashSet<>();
     }
 
+    @Override
+    public boolean equals(Object o) {
+            if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertice vertice = (Vertice) o;
+        return _id == vertice._id &&
+                Double.compare(vertice._peso, _peso) == 0 &&
+                Objects.equals(_nombre, vertice._nombre) &&
+                Objects.equals(_coordenadas, vertice._coordenadas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_id, _nombre, _coordenadas, _peso);
+    }
+
     public int obtenerId() {
         return _id;
     }
@@ -43,40 +58,6 @@ public class Vertice {
         return _vecinos.size();
     }
     
-    /**
-     * Obtiene los vecinos del vertice en el grafo, compara con vertices de clique, si vertice de clique no es vecino, retorna false
-     * @return boolean indicador de pertenencia a clique
-     */
-    public boolean perteneceAClique(Clique clique, Grafo grafo) {
-    	ArrayList<Vertice> vecinosGrafo = grafo.obtenerVecinosPorNombre(_nombre);
-    	ArrayList<Vertice> verticesClique = clique.obtenerVertices();
-    	Boolean esVecinoClique = true;
-    	
-    	for(Vertice verticeClique : verticesClique) {
-    		if(vecinosGrafo.contains(verticeClique) == false) {
-    			esVecinoClique = false;
-    		}
-    	}
-    	
-        return esVecinoClique;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-            if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vertice vertice = (Vertice) o;
-        return _id == vertice._id &&
-                Double.compare(vertice._peso, _peso) == 0 &&
-                Objects.equals(_nombre, vertice._nombre) &&
-                Objects.equals(_coordenadas, vertice._coordenadas);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(_id, _nombre, _coordenadas, _peso);
-    }
-
     public void agregarVecino(Vertice vertice) {
         _vecinos.add(vertice);
     }
