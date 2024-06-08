@@ -208,40 +208,10 @@ public class MainForm
 	    comboBox_Algoritmo.setToolTipText("");
 	    comboBox_Algoritmo.setBounds(133, 97, 138, 22);
 	    panelControlRegiones.add(comboBox_Algoritmo);
-
-	    
-	    
-		JButton btnCrearRegiones = new JButton("Crear Regiones");
-		btnCrearRegiones.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String input = textCantidadRegiones.getText();
-		        try {
-		            int numRegiones = Integer.parseInt(input);
-		            if (numRegiones > 0 && numRegiones <= grafo.obtenerDimensionMatrizArista()) {
-		                System.out.println("Numero de regiones: " + numRegiones);
-		                String algoritmo = (String) comboBox_Algoritmo.getSelectedItem();
-		                
-		                if (grafo.esGrafoConexo(grafo.obtenerMatrizArista())) {
-		                
-		                	
-		                	
-		                }else {
-							JOptionPane.showMessageDialog(null, "Todas los Nodos deben tener al menos una similitud cargada (Grafo inconexo!)", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-		            } else {
-		                JOptionPane.showMessageDialog(null, "La cantidad de regiones debe ser entre 1 y la cantidad de Nodos creadas.", "Error", JOptionPane.ERROR_MESSAGE);
-		            }
-		        } catch (NumberFormatException ex) {
-		            JOptionPane.showMessageDialog(null, "Debe ingresar un numero entero.", "Error", JOptionPane.ERROR_MESSAGE);
-		        }
-		    }
-		});
-		btnCrearRegiones.setBounds(25, 149, 136, 23);
-		panelControlRegiones.add(btnCrearRegiones);
 		
-				btnReset = new JButton("Reiniciar grafo");
-				btnReset.setBounds(68, 216, 190, 23);
-				panelControlRegiones.add(btnReset);
+		btnReset = new JButton("Reiniciar grafo");
+		btnReset.setBounds(68, 216, 190, 23);
+		panelControlRegiones.add(btnReset);
 	}
 	
 	private void cargarRelaciones() {
