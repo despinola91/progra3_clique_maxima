@@ -12,6 +12,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import negocio.Grafo;
+import negocio.Vertice;
 import negocio.Arista;
 
 import javax.swing.JButton;
@@ -309,7 +310,7 @@ public class MainForm
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarArista(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas());
+					dibujarArista(grafo.obtenerVerticePorId(i).obtenerCoordenadas(), grafo.obtenerVerticePorId(j).obtenerCoordenadas());
 				}
 			}
 		}
@@ -320,7 +321,7 @@ public class MainForm
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
 				if (matrizDeRelacion[i][j] > 0) {
-					dibujarAristaRegiones(grafo.obtenerNodoPorId(i).obtenerCoordenadas(), grafo.obtenerNodoPorId(j).obtenerCoordenadas(), Color.RED);
+					dibujarAristaRegiones(grafo.obtenerVerticePorId(i).obtenerCoordenadas(), grafo.obtenerVerticePorId(j).obtenerCoordenadas(), Color.RED);
 				}
 			}
 		}
@@ -340,10 +341,10 @@ public class MainForm
 		}
 
 	    for (Arista arista : aristas) {
-	        Nodo nodoA = arista.obtenerNodos().get(0);
-	        Nodo nodoB = arista.obtenerNodos().get(1);
-	        int peso = arista.obtenerRelacion();
-	        Object[] fila = {nodoA.obtenerNombre(), nodoB.obtenerNombre(), peso};
+	        Vertice verticeA = arista.obtenerVertices().get(0);
+	        Vertice verticeB = arista.obtenerVertices().get(1);
+	        //int peso = arista.obtenerArista();
+	        Object[] fila = {verticeA.obtenerNombre(), verticeB.obtenerNombre()};
 	        modelo.addRow(fila);
 	    }
 	}
@@ -359,14 +360,14 @@ public class MainForm
 
 				btnUnirVertices.setEnabled(true);
 				btnEliminarUnion.setEnabled(true);
-				textSimilitud.setText(null);
+				//textSimilitud.setText(null);
 				textCantidadRegiones.setText(null);
 	        }
 	    });
 	}
 
 	private void cargarDesplegablesNodos() {
-		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
-		comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(grafo.obtenerNodos().toArray(new String[0])));
+		comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
+		comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(grafo.obtenerVertices().toArray(new String[0])));
 	}	
 }

@@ -15,8 +15,8 @@ public class Arista {
         return this._vertices;
     }
 
-	public static Object obtenerArista(ArrayList<Arista> aristas, Vertice verticeA, Vertice verticeB) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public static Object obtenerArista(ArrayList<Arista> aristas, Vertice verticeA, Vertice verticeB) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerArista'");
+    }
 }
