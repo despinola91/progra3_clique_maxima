@@ -12,8 +12,10 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import negocio.Grafo;
+import negocio.SolverGoloso;
 import negocio.Vertice;
 import negocio.Arista;
+import negocio.Clique;
 
 import javax.swing.JButton;
 
@@ -35,6 +37,8 @@ import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
 
+import negocio.ComparadorPorPeso;
+import negocio.ComparadorPorGrado;
 
 
 public class MainForm 
@@ -58,6 +62,9 @@ public class MainForm
 
 	private JButton btnUnirVertices;
 	private JButton btnEliminarUnion;
+	
+//	private JComboBox<String> comboBox_Criterio;
+//  private JButton btnEjecutar; creo que no los voy a hacer global xq va a estar dentro de cargarRelaciones todo
 
 	/**
 	 * Launch the application.
@@ -174,7 +181,7 @@ public class MainForm
 	    _grafo.addMapPolygon(relacion);
 	}
 	
-	private void dibujarAristaRegiones(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2, Color color) {
+	private void dibujarAristaDeClique(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2, Color color) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
 	    listaCoordenadas.add(coordenadaVertice1);
@@ -187,6 +194,11 @@ public class MainForm
 	}
 	
 	private void cargarRelaciones() {
+	    
+	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
+	    lblTituloGrafo.setFont(new Font("Tahoma", Font.ITALIC, 16));
+	    lblTituloGrafo.setBounds(25, 12, 208, 22);
+	    panelControlRelaciones.add(lblTituloGrafo);
 	    
 	    comboBox_Vertice1 = new JComboBox<String>();
 	    comboBox_Vertice1.setToolTipText("");
@@ -207,6 +219,24 @@ public class MainForm
 	    lblVertice2.setBounds(25, 90, 62, 23);
 	    panelControlRelaciones.add(lblVertice2);
 	    
+	    JCheckBox chckbxRandom = new JCheckBox("Random");
+	    chckbxRandom.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    chckbxRandom.setBounds(182, 216, 97, 23);
+	    panelControlRelaciones.add(chckbxRandom);
+	    
+	    JLabel lblCriterio = new JLabel("Criterio");
+	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	    lblCriterio.setBounds(25, 192, 46, 14);
+	    panelControlRelaciones.add(lblCriterio);
+    
+        JComboBox<String> comboBox_Criterio = new JComboBox<String>();
+	    comboBox_Criterio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    comboBox_Criterio.setBounds(24, 217, 120, 22);
+	    panelControlRelaciones.add(comboBox_Criterio);
+        comboBox_Criterio.addItem("Peso");
+        comboBox_Criterio.addItem("Grado");
+	    
+        //UNIR VERTICES
 	    btnUnirVertices = new JButton("Unir Vertices");
 	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnUnirVertices.addActionListener(new ActionListener() {
@@ -234,6 +264,7 @@ public class MainForm
 	    btnUnirVertices.setBounds(10, 140, 134, 23);
 	    panelControlRelaciones.add(btnUnirVertices);
 	    
+	  //ELIMINAR UNION DE VERTICES
 	    btnEliminarUnion = new JButton("Eliminar Union");
 	    btnEliminarUnion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEliminarUnion.addActionListener(new ActionListener() {
@@ -249,32 +280,33 @@ public class MainForm
 	    btnEliminarUnion.setBounds(165, 140, 138, 23);
 	    panelControlRelaciones.add(btnEliminarUnion);
 	    
-	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
-	    lblTituloGrafo.setFont(new Font("Tahoma", Font.ITALIC, 16));
-	    lblTituloGrafo.setBounds(25, 12, 208, 22);
-	    panelControlRelaciones.add(lblTituloGrafo);
-	    
-	    JComboBox<String> comboBox_Criterio = new JComboBox<String>();
-	    comboBox_Criterio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    comboBox_Criterio.setBounds(24, 217, 120, 22);
-	    panelControlRelaciones.add(comboBox_Criterio);
-	    
-	    JLabel lblCriterio = new JLabel("Criterio");
-	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    lblCriterio.setBounds(25, 192, 46, 14);
-	    panelControlRelaciones.add(lblCriterio);
-        comboBox_Criterio.addItem("Peso");
-        comboBox_Criterio.addItem("Grado");
-	    
+	    //EJECUTAR SOLVER
 	    JButton btnEjecutar = new JButton("Ejecutar");
 	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 	    btnEjecutar.setBounds(214, 276, 89, 23);
 	    panelControlRelaciones.add(btnEjecutar);
-	    
-	    JCheckBox chckbxRandom = new JCheckBox("Random");
-	    chckbxRandom.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    chckbxRandom.setBounds(182, 216, 97, 23);
-	    panelControlRelaciones.add(chckbxRandom);
+	    btnEjecutar.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            String criterio = comboBox_Criterio.getSelectedItem().toString();
+	            Clique clique;
+
+	            SolverGoloso solver;
+
+	            if (criterio.equals("Peso")) {
+	                solver = new SolverGoloso(grafo, new ComparadorPorPeso());
+	            } else {
+	                solver = new SolverGoloso(grafo, new ComparadorPorGrado());
+	            }
+
+	            if (chckbxRandom.isSelected()) {
+	                clique = solver.resolverConElementoRandom();
+	            } else {
+	                clique = solver.resolver();
+	            }
+
+	            // aca despues voy a dibujar la clique
+	        }
+	    });
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
