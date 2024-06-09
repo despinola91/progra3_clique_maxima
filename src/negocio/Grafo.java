@@ -157,20 +157,6 @@ public class Grafo {
     }
 
     /**
-     * Obtiene la dimensión de la matriz arista actual.
-     * @return dimensión de la matriz.
-     */
-    public int obtenerDimensionMatrizArista() {
-        return _matrizDeArista.length;
-    }
-
-
-    public Vertice obtenerVertice(String nombreVertice) {
-        Vertice nodo = _mapeoVertices.get(nombreVertice);
-        return nodo;
-    }
-
-    /**
      * Obtiene lista vertices del grafo.
      * @return  lista de vertices agregadas al grafo.
      */
@@ -179,15 +165,6 @@ public class Grafo {
         // listaVertices.addAll(vertices.keySet());
         // Collections.sort(listaVertices);
         return _vertices;
-    }
-
-    /**
-     * Obtiene el objeto Vertice a partir de un nombre de Vertice.
-     * @param nombreVertice
-     * @return objeto Vertice.
-     */
-    public Vertice obtenerVerticePorNombre(String nombreVertice) {
-        return _mapeoVertices.get(nombreVertice);
     }
 
     /**
@@ -204,42 +181,6 @@ public class Grafo {
         }
 
         throw new IllegalArgumentException("Vertice not found for id: " + id);
-    }
-
-    
-    public int[][] dividirRegiones(int[][] matrizDeRegiones, int cantidadRegiones) {
-        int[][] matrizResultado = new int[matrizDeRegiones.length][matrizDeRegiones.length];
-
-        // Copiar la matriz original a la matriz resultado
-        for (int i = 0; i < matrizDeRegiones.length; i++) {
-            for (int j = 0; j < matrizDeRegiones[0].length; j++) {
-                matrizResultado[i][j] = matrizDeRegiones[i][j];
-            }
-        }
-
-        // Poner en 0 los valores más altos de la matriz resultado
-        for (int k = 0; k < cantidadRegiones-1; k++) {
-            int maximo = Integer.MIN_VALUE;
-            int filaMaximo = -1;
-            int columnaMaximo = -1;
-
-            // Encontrar el valor más alto en la matriz resultado
-            for (int i = 0; i < matrizResultado.length; i++) {
-                for (int j = 0; j < matrizResultado[0].length; j++) {
-                    if (matrizResultado[i][j] > maximo) {
-                        maximo = matrizResultado[i][j];
-                        filaMaximo = i;
-                        columnaMaximo = j;
-                    }
-                }
-            }
-
-            // Poner en 0 el valor más alto encontrado
-            matrizResultado[filaMaximo][columnaMaximo] = 0;
-            matrizResultado[columnaMaximo][filaMaximo] = 0;
-        }
-
-        return matrizResultado;
     }
 
     /**
@@ -259,6 +200,21 @@ public class Grafo {
     }
     
     /**
+     * Indica si un vertice es vercino de todos los vertices de una lista.
+     * @param vertices 
+     * @param nuevoVertice 
+     * @return
+     */
+    public boolean verticeVecinoDeTodos(ArrayList<Vertice> vertices, Vertice nuevoVertice) {
+        for(Vertice vertice: vertices) {
+            if (!existeArista(vertice.obtenerNombre(), nuevoVertice.obtenerNombre())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+     /**
      * Reinicia el grafo.
      */
     public void reiniciarGrafo() {
@@ -267,31 +223,5 @@ public class Grafo {
         _mapeoVertices.clear();
         _aristas.clear();
         _vertices.clear();
-    }
-
-	public ArrayList<Vertice> obtenerVecinosPorNombre(String nombre) {
-		Vertice vertice = obtenerVerticePorNombre(nombre);
-		
-		if(vertice == null) {
-			throw new Error("Vertice no existente en grafo");
-		}
-		
-		int[] arrayIdVecinos = _matrizDeArista[vertice.obtenerId()];
-		ArrayList<Vertice> verticesVecinos = new ArrayList<Vertice>();
-		
-		for(int idVecino : arrayIdVecinos) {
-			verticesVecinos.add(obtenerVerticePorId(idVecino));
-		}
-		
-		return verticesVecinos;
-	}
-
-    public boolean verticeVecinoDeTodos(ArrayList<Vertice> vertices, Vertice nuevoVertice) {
-        for(Vertice vertice: vertices) {
-            if (!existeArista(vertice.obtenerNombre(), nuevoVertice.obtenerNombre())) {
-                return false;
-            }
-        }
-        return true;
     }
 }

@@ -93,20 +93,6 @@ class GrafoTest {
 	}
 
 	@Test
-	void obtenerVerticePorNombreTest() {
-	
-		Grafo grafo = new Grafo();
-		grafo.agregarVertice("1", new Coordinate(50, 60), 19.80);
-		Vertice vertice = grafo.obtenerVerticePorNombre("1");
-		
-		assertTrue(vertice.obtenerId() == 0);
-		assertTrue(vertice.obtenerNombre() == "1");
-		assertTrue(vertice.obtenerCoordenadas().getLat() == 50.00);
-		assertTrue(vertice.obtenerCoordenadas().getLon() == 60.00);
-		assertTrue(vertice.obtenerPeso() == 19.80);
-	}
-
-	@Test
 	void obtenerVerticePorIdTest() {
 	
 		Grafo grafo = new Grafo();
