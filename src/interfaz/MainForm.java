@@ -43,7 +43,6 @@ public class MainForm
 
 	private JPanel panelgrafo;
 	private JPanel panelControlRelaciones;
-	private JPanel panelControlRegiones;
 
 	private JComboBox<String> comboBox_Vertice2;
 	private JComboBox<String> comboBox_Vertice1;
@@ -101,7 +100,7 @@ public class MainForm
 		
 		panelControlRelaciones = new JPanel();
 		panelControlRelaciones.setToolTipText("");
-		panelControlRelaciones.setBounds(457, 11, 313, 310);
+		panelControlRelaciones.setBounds(453, 88, 313, 348);
 		frmNodosGolosos.getContentPane().add(panelControlRelaciones);		
 		panelControlRelaciones.setLayout(null);
 		
@@ -112,14 +111,9 @@ public class MainForm
 				
 		panelgrafo.add(_grafo);
 		
-		panelControlRegiones = new JPanel();
-		panelControlRegiones.setBounds(455, 332, 315, 190);
-		frmNodosGolosos.getContentPane().add(panelControlRegiones);
-		panelControlRegiones.setLayout(null);
-		
 		lblBandera = new JLabel("");
 		lblBandera.setIcon(new ImageIcon("fondo.jpg"));
-		lblBandera.setBounds(8, 0, 773, 536);
+		lblBandera.setBounds(8, 0, 784, 538);
 		frmNodosGolosos.getContentPane().add(lblBandera);
 		
 		grafo = new Grafo();
@@ -191,7 +185,8 @@ public class MainForm
 	private void cargarRelaciones() {
 	    
 	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
-	    lblTituloGrafo.setFont(new Font("Tahoma", Font.ITALIC, 16));
+	    lblTituloGrafo.setForeground(new Color(102, 205, 170));
+	    lblTituloGrafo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 	    lblTituloGrafo.setBounds(25, 12, 208, 22);
 	    panelControlRelaciones.add(lblTituloGrafo);
 	    
@@ -216,23 +211,25 @@ public class MainForm
 	    
 	    JCheckBox chckbxRandom = new JCheckBox("Random");
 	    chckbxRandom.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    chckbxRandom.setBounds(182, 216, 97, 23);
+	    chckbxRandom.setBounds(183, 255, 97, 23);
 	    panelControlRelaciones.add(chckbxRandom);
 	    
 	    JLabel lblCriterio = new JLabel("Criterio");
 	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    lblCriterio.setBounds(25, 192, 46, 14);
+	    lblCriterio.setBounds(26, 231, 46, 14);
 	    panelControlRelaciones.add(lblCriterio);
     
         JComboBox<String> comboBox_Criterio = new JComboBox<String>();
 	    comboBox_Criterio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    comboBox_Criterio.setBounds(24, 217, 120, 22);
+	    comboBox_Criterio.setBounds(25, 256, 120, 22);
 	    panelControlRelaciones.add(comboBox_Criterio);
         comboBox_Criterio.addItem("Peso");
         comboBox_Criterio.addItem("Grado");
 	    
         //UNIR VERTICES
 	    btnUnirVertices = new JButton("Unir Vertices");
+	    btnUnirVertices.setBackground(new Color(102, 205, 170));
+	    btnUnirVertices.setForeground(new Color(0, 0, 0));
 	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnUnirVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -277,14 +274,22 @@ public class MainForm
 	    
 	    //EJECUTAR SOLVER
 	    JButton btnEjecutar = new JButton("Ejecutar");
+	    btnEjecutar.setBackground(new Color(244, 164, 96));
 	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    btnEjecutar.setBounds(214, 276, 89, 23);
+	    btnEjecutar.setBounds(197, 315, 89, 23);
 	    panelControlRelaciones.add(btnEjecutar);
 	    
 	    // Inicializa el botón de reset aquí
 	    btnReset = new JButton("Reset");
-	    btnReset.setBounds(25, 276, 80, 25);
+	    btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnReset.setBounds(26, 315, 80, 23);
 	    panelControlRelaciones.add(btnReset);
+	    
+	    JLabel lblTituloCliqueMax = new JLabel("Clique Maxima con Golosos");
+	    lblTituloCliqueMax.setForeground(new Color(244, 164, 96));
+	    lblTituloCliqueMax.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+	    lblTituloCliqueMax.setBounds(25, 199, 278, 22);
+	    panelControlRelaciones.add(lblTituloCliqueMax);
 	    
 	    btnEjecutar.addActionListener(new ActionListener() {	
 	        public void actionPerformed(ActionEvent e) {
@@ -400,5 +405,4 @@ public class MainForm
 	    comboBox_Vertice1.setModel(new DefaultComboBoxModel<>(nombresVertices));
 	    comboBox_Vertice2.setModel(new DefaultComboBoxModel<>(nombresVertices));
 	}
-
 }
