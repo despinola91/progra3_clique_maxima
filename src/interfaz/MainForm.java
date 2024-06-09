@@ -49,7 +49,7 @@ public class MainForm
 	private JComboBox<String> comboBox_Vertice2;
 	private JComboBox<String> comboBox_Vertice1;
 	private JComboBox<String> comboBox_Algoritmo;
-	//private JButton btnReset;
+	private JButton btnReset;
 	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
@@ -130,7 +130,8 @@ public class MainForm
 		detectarCoordenadas();	
 		cargarRelaciones();
 		mostrarRelaciones(false);
-		//reset();
+		
+		reset();
 	}
 	
 	private void detectarCoordenadas() 
@@ -282,6 +283,12 @@ public class MainForm
 	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 	    btnEjecutar.setBounds(214, 276, 89, 23);
 	    panelControlRelaciones.add(btnEjecutar);
+	    
+	    // Inicializa el botón de reset aquí
+	    btnReset = new JButton("Reset");
+	    btnReset.setBounds(25, 276, 80, 25);
+	    panelControlRelaciones.add(btnReset);
+	    
 	    btnEjecutar.addActionListener(new ActionListener() {	
 	        public void actionPerformed(ActionEvent e) {
 	            String criterio = comboBox_Criterio.getSelectedItem().toString();
@@ -368,21 +375,23 @@ public class MainForm
 	    }
 	}
 	
-//	private void reset() {   
-//	    btnReset.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	            _grafo.removeAllMapMarkers();
-//	            _grafo.removeAllMapPolygons();
-//	            grafo.reiniciarGrafo();
-//	      
-//				cargarDesplegablesVertices();
-//
-//				btnUnirVertices.setEnabled(true);
-//				btnEliminarUnion.setEnabled(true);
-//				textCantidadRegiones.setText(null);
-//	        }
-//	    });
-//	}
+	private void reset() {   
+	    btnReset.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	_grafo.removeAllMapMarkers();
+	            _grafo.removeAllMapPolygons();
+	            grafo.reiniciarGrafo();
+	            
+	            // Vaciar los modelos de las listas desplegables
+	            comboBox_Vertice1.setModel(new DefaultComboBoxModel<>());
+	            comboBox_Vertice2.setModel(new DefaultComboBoxModel<>());
+
+	            btnUnirVertices.setEnabled(true);
+	            btnEliminarUnion.setEnabled(true);
+	            textCantidadRegiones.setText(null);
+	        }
+	    });
+	}
 
 	private void cargarDesplegablesVertices() {
 	    ArrayList<Vertice> vertices = grafo.obtenerVertices();
