@@ -14,7 +14,6 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import negocio.Grafo;
 import negocio.SolverGoloso;
 import negocio.Vertice;
-import negocio.Arista;
 import negocio.Clique;
 
 import javax.swing.JButton;
@@ -33,8 +32,6 @@ import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
-
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
 
 public class MainForm 
@@ -120,7 +117,6 @@ public class MainForm
 
 		detectarCoordenadas();	
 		cargarRelaciones();
-		mostrarRelaciones(false);
 		
 		reset();
 	}
@@ -138,7 +134,7 @@ public class MainForm
 				String nombre = String.valueOf(grafo.obtenerVertices().size()+1);
 				String tituloDialogo = "Vértice nro " + nombre;
 				String pesoString = JOptionPane.showInputDialog(null, 
-	                    "Peso Vértice (para los decimales utilizar separación por punto, ej.: x.x):", 
+	                    "Peso del vértice (utilizar separación por punto, ej.: 3.5):", 
 	                    tituloDialogo, 
 	                    JOptionPane.PLAIN_MESSAGE);
 				nombre = nombre + " (peso: "+pesoString+")";
@@ -191,7 +187,6 @@ public class MainForm
 	    panelControlRelaciones.add(lblTituloGrafo);
 	    
 	    comboBox_Vertice1 = new JComboBox<String>();
-	    comboBox_Vertice1.setToolTipText("");
 	    comboBox_Vertice1.setBounds(141, 57, 138, 22);
 	    panelControlRelaciones.add(comboBox_Vertice1);
 	    
@@ -210,6 +205,7 @@ public class MainForm
 	    panelControlRelaciones.add(lblVertice2);
 	    
 	    JCheckBox chckbxRandom = new JCheckBox("Random");
+		chckbxRandom.setToolTipText("Agrega un elemento random al algoritmo que sugiere una clique.");
 	    chckbxRandom.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	    chckbxRandom.setBounds(183, 255, 97, 23);
 	    panelControlRelaciones.add(chckbxRandom);
@@ -227,9 +223,7 @@ public class MainForm
         comboBox_Criterio.addItem("Grado");
 	    
         //UNIR VERTICES
-	    btnUnirVertices = new JButton("Unir Vertices");
-	    btnUnirVertices.setBackground(new Color(102, 205, 170));
-	    btnUnirVertices.setForeground(new Color(0, 0, 0));
+	    btnUnirVertices = new JButton("Agregar arco");
 	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnUnirVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -240,7 +234,6 @@ public class MainForm
 					if (!nombreVertice1.equals(nombreVertice2)) {
 						grafo.agregarArista(nombreVertice1, nombreVertice2);
 						dibujargrafo(grafo.obtenerMatrizArista());
-						mostrarRelaciones(false);
 					} else {
 						JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionadas son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
@@ -257,7 +250,7 @@ public class MainForm
 	    panelControlRelaciones.add(btnUnirVertices);
 	    
 	  //ELIMINAR UNION DE VERTICES
-	    btnEliminarUnion = new JButton("Eliminar Union");
+	    btnEliminarUnion = new JButton("Eliminar arco");
 	    btnEliminarUnion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEliminarUnion.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
@@ -266,7 +259,6 @@ public class MainForm
 	            
 	            grafo.eliminarArista(nombreVertice1, nombreVertice2);
 				dibujargrafo(grafo.obtenerMatrizArista());
-				mostrarRelaciones(false);
 	        }
 	    });
 	    btnEliminarUnion.setBounds(165, 140, 138, 23);
@@ -280,9 +272,8 @@ public class MainForm
 	    panelControlRelaciones.add(btnEjecutar);
 	    
 	    // Inicializa el botón de reset aquí
-	    btnReset = new JButton("Reset");
-	    btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    btnReset.setBounds(26, 315, 80, 23);
+	    btnReset = new JButton("Reiniciar");
+	    btnReset.setBounds(25, 276, 80, 25);
 	    panelControlRelaciones.add(btnReset);
 	    
 	    JLabel lblTituloCliqueMax = new JLabel("Clique Maxima con Golosos");
@@ -354,27 +345,6 @@ public class MainForm
 				}
 			}
 		}
-	}
-
-	private void mostrarRelaciones(boolean soloRegiones) {
-		
-	    String[] columnas = {"Origen", "Destino", "Similaridad"};
-	    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-	    
-		ArrayList<Arista> aristas = new ArrayList<Arista>();
-		if(soloRegiones) {
-			//aristas = grafo.obtenerAristasRegiones(); obtener AristasRegiones ya no esta definida en negocio
-		}
-		else {
-			aristas = grafo.obtenerAristas();
-		}
-
-	    for (Arista arista : aristas) {
-	        Vertice verticeA = arista.obtenerVertices().get(0);
-	        Vertice verticeB = arista.obtenerVertices().get(1);
-	        Object[] fila = {verticeA.obtenerNombre(), verticeB.obtenerNombre()};
-	        modelo.addRow(fila);
-	    }
 	}
 	
 	private void reset() {   
