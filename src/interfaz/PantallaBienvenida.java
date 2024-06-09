@@ -3,19 +3,13 @@ package interfaz;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.Color;
-import java.awt.Toolkit;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class PantallaBienvenida {
 
@@ -51,7 +45,7 @@ public class PantallaBienvenida {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.setTitle("Clique Maxima"); // Titulo de la ventana
+		frame.setTitle("Clique Maxima");
 		frame.getContentPane().setBackground(new Color(210, 180, 140));
 		frame.setBounds(300, 20, 628, 399);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
