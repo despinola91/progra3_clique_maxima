@@ -289,7 +289,6 @@ public class MainForm
 	        public void actionPerformed(ActionEvent e) {
 	            String criterio = comboBox_Criterio.getSelectedItem().toString();
 	            Clique clique;
-
 	            SolverGoloso solver;
 
 	            if (criterio.equals("Peso")) {
@@ -304,7 +303,17 @@ public class MainForm
 	                clique = solver.resolver();
 	            }
 
-	            // aca despues voy a dibujar la clique
+	            //Se dibujan las aristas de la clique
+	            Color colorClique = Color.GREEN;
+	            ArrayList<Vertice> vertices = clique.obtenerVertices();
+	            for (int i = 0; i < vertices.size(); i++) {
+	                for (int j = i + 1; j < vertices.size(); j++) {
+	                    Vertice verticeA = vertices.get(i);
+	                    Vertice verticeB = vertices.get(j);
+	                    dibujarAristaDeClique(verticeA.obtenerCoordenadas(), verticeB.obtenerCoordenadas(), colorClique);
+	                }
+	            }
+	            _grafo.repaint();
 	        }
 	    });
 	}
