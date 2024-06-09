@@ -129,7 +129,6 @@ public class MainForm
 
 		detectarCoordenadas();	
 		cargarRelaciones();
-		//dividirRegiones();
 		mostrarRelaciones(false);
 		//reset();
 	}
