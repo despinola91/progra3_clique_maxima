@@ -266,6 +266,7 @@ public class Grafo {
         _matrizDeArista = new int[0][0];
         _mapeoVertices.clear();
         _aristas.clear();
+        _vertices.clear();
     }
 
 	public ArrayList<Vertice> obtenerVecinosPorNombre(String nombre) {
