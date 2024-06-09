@@ -52,6 +52,10 @@ public class Grafo {
      */
     public void eliminarArista(String nombreVertice1, String nombreVertice2)
 	{
+        if (!existeArista(nombreVertice1, nombreVertice2)) {
+            throw new IllegalArgumentException("La arista no existe");
+        }
+
         Vertice verticeA = _mapeoVertices.get(nombreVertice1);
         Vertice verticeB = _mapeoVertices.get(nombreVertice2);
 

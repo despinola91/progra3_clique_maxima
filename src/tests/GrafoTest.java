@@ -92,7 +92,6 @@ class GrafoTest {
  		assertTrue(verticesEsperados.equals(verticesResultado));
 	}
 
-
 	@Test
 	void obtenerVerticePorNombreTest() {
 	
