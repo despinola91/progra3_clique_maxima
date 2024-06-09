@@ -9,14 +9,12 @@ public class Grafo {
 
     private HashMap<String, Vertice> _mapeoVertices = new HashMap<>();
     private ArrayList<Vertice> _vertices = new ArrayList<>();
-    private ArrayList<Arista> aristas = new ArrayList<>();
-    private int[][] matrizDeArista;
-    private int[][] matrizDeRegiones;
-	private HashMap<Integer, ArrayList<Vertice>> indiceConVecinos;
+    private ArrayList<Arista> _aristas = new ArrayList<>();
+    private int[][] _matrizDeArista;
     
     public Grafo()
 	{
-        matrizDeArista = new int[0][0];
+        _matrizDeArista = new int[0][0];
 	}
 
     /**
@@ -35,14 +33,14 @@ public class Grafo {
         int idVertice1 = verticeA.obtenerId();
         int idVertice2 = verticeB.obtenerId();
 
-        matrizDeArista[idVertice1][idVertice2] = 1;
-        matrizDeArista[idVertice2][idVertice1] = 1;
+        _matrizDeArista[idVertice1][idVertice2] = 1;
+        _matrizDeArista[idVertice2][idVertice1] = 1;
 
         verticeA.agregarVecino(verticeB);
         verticeB.agregarVecino(verticeA);
 
         Arista arista = new Arista(_mapeoVertices.get(nombreVertice1), _mapeoVertices.get(nombreVertice2));
-        aristas.add(arista);
+        _aristas.add(arista);
 	}
 
     /**
@@ -52,16 +50,20 @@ public class Grafo {
      */
     public void eliminarArista(String nombreVertice1, String nombreVertice2)
 	{
+        if (!existeArista(nombreVertice1, nombreVertice2)) {
+            throw new IllegalArgumentException("La arista no existe");
+        }
+
         Vertice verticeA = _mapeoVertices.get(nombreVertice1);
         Vertice verticeB = _mapeoVertices.get(nombreVertice2);
 
         int idvertice1 = verticeA.obtenerId();
         int idvertice2 = verticeB.obtenerId();
 
-		matrizDeArista[idvertice1][idvertice2] = 0;
-        matrizDeArista[idvertice2][idvertice1] = 0;
+		_matrizDeArista[idvertice1][idvertice2] = 0;
+        _matrizDeArista[idvertice2][idvertice1] = 0;
         
-        aristas.remove(Arista.obtenerArista(aristas, verticeA, verticeB));
+        _aristas.remove(Arista.obtenerArista(_aristas, verticeA, verticeB));
         verticeA.eliminarVecino(verticeB);
         verticeB.eliminarVecino(verticeA);
 	}
@@ -92,21 +94,7 @@ public class Grafo {
         int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
         int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
 
-		return matrizDeArista[idVertice1][idVertice2] > 0;
-	}
-
-    /**
-     * Informa si ya existe una arista entre dos vertices dentro de las regiones.
-     * @param nombreVertice1
-     * @param nombreVertice2
-     * @return booleano indicando si existe la arista.
-     */
-    public boolean existeAristaRegiones(String nombreVertice1, String nombreVertice2)
-	{
-        int idVertice1 = _mapeoVertices.get(nombreVertice1).obtenerId();
-        int idVertice2 = _mapeoVertices.get(nombreVertice2).obtenerId();
-
-		return matrizDeRegiones[idVertice1][idVertice2] > 0;
+		return _matrizDeArista[idVertice1][idVertice2] > 0;
 	}
 
     /**
@@ -124,17 +112,17 @@ public class Grafo {
         _vertices.add(Vertice);
         _mapeoVertices.put(nombreVertice, Vertice);
 
-        int tamanioActual = matrizDeArista.length;
-        int nuevoTamanio = matrizDeArista.length + 1;
+        int tamanioActual = _matrizDeArista.length;
+        int nuevoTamanio = _matrizDeArista.length + 1;
         int[][] nuevaMatrizArista = new int[nuevoTamanio][nuevoTamanio];
 
         for (int i = 0; i < tamanioActual; i++) {
             for (int j = 0; j < tamanioActual; j++) {
-                nuevaMatrizArista[i][j] = matrizDeArista[i][j];
+                nuevaMatrizArista[i][j] = _matrizDeArista[i][j];
             }
         }
 
-        matrizDeArista = nuevaMatrizArista;
+        _matrizDeArista = nuevaMatrizArista;
     }
 
     /**
@@ -147,16 +135,16 @@ public class Grafo {
         }
         
         _mapeoVertices.remove(nombreVertice);
-        int nuevoTamanio = matrizDeArista.length - 1;
+        int nuevoTamanio = _matrizDeArista.length - 1;
         int[][] nuevaMatrizArista = new int[nuevoTamanio][nuevoTamanio];
 
         for (int i = 0; i < nuevoTamanio; i++) {
             for (int j = 0; j < nuevoTamanio; j++) {
-                nuevaMatrizArista[i][j] = matrizDeArista[i][j];
+                nuevaMatrizArista[i][j] = _matrizDeArista[i][j];
             }
         }
 
-        matrizDeArista = nuevaMatrizArista;
+        _matrizDeArista = nuevaMatrizArista;
     }
 
     /**
@@ -173,8 +161,9 @@ public class Grafo {
      * @return dimensión de la matriz.
      */
     public int obtenerDimensionMatrizArista() {
-        return matrizDeArista.length;
+        return _matrizDeArista.length;
     }
+
 
     public Vertice obtenerVertice(String nombreVertice) {
         Vertice nodo = _mapeoVertices.get(nombreVertice);
@@ -253,14 +242,12 @@ public class Grafo {
         return matrizResultado;
     }
 
-
-
     /**
      * Obtiene matriz de arista.
      * @return matriz de arista.
      */
     public int[][] obtenerMatrizArista() {
-        return matrizDeArista;
+        return _matrizDeArista;
     }
     
     /**
@@ -268,45 +255,18 @@ public class Grafo {
      * @return lista de objetos de tipo arista.
      */
     public ArrayList<Arista> obtenerAristas() {
-        return aristas;
+        return _aristas;
     }
     
-    /**
-     * Obtiene una lista de Aristaes resultantes luego de crear las regiones
-     * @return lista de Aristaes
-     */
-    public ArrayList<Arista> obtenerAristasRegiones() {
-        
-        ArrayList<Arista> Aristas = new ArrayList<>();
-
-        for (int i = 0; i < matrizDeRegiones.length; i++) {
-            for (int j = i+1; j < matrizDeRegiones.length; j++) {
-                if (matrizDeRegiones[i][j] > 0){
-                    
-                    Vertice VerticeA = obtenerVerticePorId(i);
-                    Vertice VerticeB = obtenerVerticePorId(j);
-
-                    Aristas.add(new Arista(VerticeA, VerticeB));
-                }
-            }
-        }
-        return Aristas;
-    }
-
     /**
      * Reinicia el grafo.
      */
     public void reiniciarGrafo() {
 
-        matrizDeArista = new int[0][0];
-        matrizDeRegiones = new int[0][0];
+        _matrizDeArista = new int[0][0];
         _mapeoVertices.clear();
-        aristas.clear();
+        _aristas.clear();
     }
-
-	public HashMap<Integer, ArrayList<Vertice>> obtenerIndiceConVecinos() {
-		return indiceConVecinos;
-	}
 
 	public ArrayList<Vertice> obtenerVecinosPorNombre(String nombre) {
 		Vertice vertice = obtenerVerticePorNombre(nombre);
@@ -315,7 +275,7 @@ public class Grafo {
 			throw new Error("Vertice no existente en grafo");
 		}
 		
-		int[] arrayIdVecinos = matrizDeArista[vertice.obtenerId()];
+		int[] arrayIdVecinos = _matrizDeArista[vertice.obtenerId()];
 		ArrayList<Vertice> verticesVecinos = new ArrayList<Vertice>();
 		
 		for(int idVecino : arrayIdVecinos) {
