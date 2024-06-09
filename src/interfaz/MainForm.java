@@ -149,6 +149,7 @@ public class MainForm
 	                    "Peso Vértice (para los decimales utilizar separación por punto, ej.: x.x):", 
 	                    tituloDialogo, 
 	                    JOptionPane.PLAIN_MESSAGE);
+				nombre = nombre + " (Peso: "+pesoString+")";
 				float peso = Float.parseFloat(pesoString);
 
 				if (nombre != null && !nombre.isEmpty() && peso != 0) {
