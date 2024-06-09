@@ -29,7 +29,6 @@ import java.awt.Point;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -48,9 +47,7 @@ public class MainForm
 
 	private JComboBox<String> comboBox_Vertice2;
 	private JComboBox<String> comboBox_Vertice1;
-	private JComboBox<String> comboBox_Algoritmo;
 	private JButton btnReset;
-	private JTextPane textCantidadRegiones;
 
 	private JMapViewer _grafo;
 	private JLabel lblBandera;
@@ -388,7 +385,6 @@ public class MainForm
 
 	            btnUnirVertices.setEnabled(true);
 	            btnEliminarUnion.setEnabled(true);
-	            textCantidadRegiones.setText(null);
 	        }
 	    });
 	}
