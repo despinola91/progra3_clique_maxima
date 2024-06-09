@@ -349,7 +349,7 @@ public class MainForm
 	    
 		ArrayList<Arista> aristas = new ArrayList<Arista>();
 		if(soloRegiones) {
-			aristas = grafo.obtenerAristasRegiones();
+			//aristas = grafo.obtenerAristasRegiones(); obtener AristasRegiones ya no esta definida en negocio
 		}
 		else {
 			aristas = grafo.obtenerAristas();
