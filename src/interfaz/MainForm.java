@@ -145,7 +145,7 @@ public class MainForm
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
 				String nombre = JOptionPane.showInputDialog("Nombre Vertice: ");
-				String pesoString = JOptionPane.showInputDialog("Peso Vertice: ");
+				String pesoString = JOptionPane.showInputDialog("Peso Vertice (para los decimales utilizar separación por punto, ej.: x.x): ");
 				float peso = Float.parseFloat(pesoString);
 
 				if (nombre != null && !nombre.isEmpty() && peso != 0) {
