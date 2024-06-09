@@ -37,10 +37,6 @@ import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
 
-import negocio.ComparadorPorPeso;
-import negocio.ComparadorPorGrado;
-
-
 public class MainForm 
 {
 	public JFrame frmNodosGolosos;
@@ -62,9 +58,6 @@ public class MainForm
 
 	private JButton btnUnirVertices;
 	private JButton btnEliminarUnion;
-	
-//	private JComboBox<String> comboBox_Criterio;
-//  private JButton btnEjecutar; creo que no los voy a hacer global xq va a estar dentro de cargarRelaciones todo
 
 	/**
 	 * Launch the application.
@@ -285,16 +278,36 @@ public class MainForm
 	    btnEjecutar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 	    btnEjecutar.setBounds(214, 276, 89, 23);
 	    panelControlRelaciones.add(btnEjecutar);
-	    btnEjecutar.addActionListener(new ActionListener() {
+	    btnEjecutar.addActionListener(new ActionListener() {	
 	        public void actionPerformed(ActionEvent e) {
 	            String criterio = comboBox_Criterio.getSelectedItem().toString();
 	            Clique clique;
 	            SolverGoloso solver;
 
 	            if (criterio.equals("Peso")) {
-	                solver = new SolverGoloso(grafo, new ComparadorPorPeso());
-	            } else {
-	                solver = new SolverGoloso(grafo, new ComparadorPorGrado());
+	                solver = new SolverGoloso(grafo, new Comparator<Vertice>() {
+	                    @Override
+	        			public int compare(Vertice uno, Vertice otro) 
+	        			{
+	                        if (uno.obtenerPeso() > otro.obtenerPeso()) {
+	                            return -1;
+	                        }
+	                        if (uno.obtenerPeso() < otro.obtenerPeso()) {
+	                            return 1;
+	                        }
+	                        else {
+	                            return 0;
+	                        }
+	        			}
+	                });
+	            }
+	            else {
+	                solver = new SolverGoloso(grafo, new Comparator<Vertice>() {
+	                    @Override
+	                    public int compare(Vertice uno, Vertice otro) {
+	                    	return -uno.obtenerGrado() + otro.obtenerGrado();
+	                    }
+	                });
 	            }
 
 	            if (chckbxRandom.isSelected()) {
