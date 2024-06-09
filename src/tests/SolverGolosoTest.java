@@ -105,6 +105,4 @@ public class SolverGolosoTest {
 
         return grafo;
     }
-
-
 }
