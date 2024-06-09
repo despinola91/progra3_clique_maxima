@@ -59,6 +59,8 @@ public class MainForm
 
 	private JButton btnUnirVertices;
 	private JButton btnEliminarUnion;
+	
+	private int contadorVertices = 1;
 
 	/**
 	 * Launch the application.
@@ -143,7 +145,7 @@ public class MainForm
 			if (e.getButton() == MouseEvent.BUTTON1)
 			{
 				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = JOptionPane.showInputDialog("Nombre Vertice: ");
+				String nombre = String.valueOf(contadorVertices);
 				String pesoString = JOptionPane.showInputDialog("Peso Vertice (para los decimales utilizar separación por punto, ej.: x.x): ");
 				float peso = Float.parseFloat(pesoString);
 
@@ -151,6 +153,7 @@ public class MainForm
 					try {
 						grafo.agregarVertice(nombre, coordenadas, peso);
 						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
+						contadorVertices++;
                     } catch (IllegalArgumentException ex) {
 						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
