@@ -121,38 +121,41 @@ public class MainForm
 		reset();
 	}
 	
-	private void detectarCoordenadas() 
-	{	
-		_grafo.addMouseListener(new MouseAdapter() 
-		{
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-			if (e.getButton() == MouseEvent.BUTTON1)
-			{
-				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = String.valueOf(grafo.obtenerVertices().size()+1);
-				String tituloDialogo = "Vértice nro " + nombre;
-				String pesoString = JOptionPane.showInputDialog(null, 
-	                    "Peso del vértice (utilizar separación por punto, ej.: 3.5):", 
-	                    tituloDialogo, 
-	                    JOptionPane.PLAIN_MESSAGE);
-				nombre = nombre + " (peso: "+pesoString+")";
-				float peso = Float.parseFloat(pesoString);
+	private void detectarCoordenadas() {	
+	    _grafo.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            if (e.getButton() == MouseEvent.BUTTON1) {
+	                Coordinate coordenadas = (Coordinate) _grafo.getPosition(e.getPoint());
+	                String nombre = String.valueOf(grafo.obtenerVertices().size() + 1);
+	                String tituloDialogo = "Vertice nro " + nombre;
+	                String pesoString = JOptionPane.showInputDialog(null,
+	                        "Peso del vertice (utilizar separación por punto, ej.: 3.5):",
+	                        tituloDialogo,
+	                        JOptionPane.PLAIN_MESSAGE);
 
-				if (nombre != null && !nombre.isEmpty() && peso != 0) {
-					try {
-						grafo.agregarVertice(nombre, coordenadas, peso);
-						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
-                    } catch (IllegalArgumentException ex) {
-						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+	                if (pesoString != null && !pesoString.trim().isEmpty()) {
+	                    try {
+	                        float peso = Float.parseFloat(pesoString);
+	                        nombre = nombre + " (peso: " + pesoString + ")";
 
-					cargarDesplegablesVertices();
-				}
-			}}
-		});
+	                        grafo.agregarVertice(nombre, coordenadas, peso);
+	                        _grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
+
+	                        cargarDesplegablesVertices();
+	                    } catch (NumberFormatException ex) {
+	                        JOptionPane.showMessageDialog(null, "Debe ingresar un nemero valido", "Error", JOptionPane.ERROR_MESSAGE);
+	                    } catch (IllegalArgumentException ex) {
+	                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "El peso del vertice no puede estar vacio", "Error", JOptionPane.ERROR_MESSAGE);
+	                }
+	            }
+	        }
+	    });
 	}
+
 	
 	private void dibujarArista(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
