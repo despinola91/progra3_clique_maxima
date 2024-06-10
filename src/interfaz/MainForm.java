@@ -148,8 +148,6 @@ public class MainForm
 	                    } catch (IllegalArgumentException ex) {
 	                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	                    }
-	                } else {
-	                    JOptionPane.showMessageDialog(null, "El peso del vertice no puede estar vacio", "Error", JOptionPane.ERROR_MESSAGE);
 	                }
 	            }
 	        }
