@@ -231,7 +231,7 @@ public class MainForm
 				String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
 
 				try {
-					if (!nombreVertice1.equals(nombreVertice2)) {
+					if (!nombreVertice1.equals(nombreVertice2) && grafo.obtenerVertices().size()<2) {
 						grafo.agregarArista(nombreVertice1, nombreVertice2);
 						dibujargrafo(grafo.obtenerMatrizArista());
 					} else {
