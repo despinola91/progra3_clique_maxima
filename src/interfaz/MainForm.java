@@ -223,31 +223,35 @@ public class MainForm
         comboBox_Criterio.addItem("Grado");
 	    
         //UNIR VERTICES
-	    btnUnirVertices = new JButton("Agregar arco");
-	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnUnirVertices.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();	            
-				String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
+        btnUnirVertices = new JButton("Agregar arco");
+        btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnUnirVertices.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (comboBox_Vertice1.getSelectedItem() == null || comboBox_Vertice2.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(null, "Deben haber vertices para seleccionar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-				try {
-					if (!nombreVertice1.equals(nombreVertice2) || grafo.obtenerVertices().size()<2) {
-						grafo.agregarArista(nombreVertice1, nombreVertice2);
-						dibujargrafo(grafo.obtenerMatrizArista());
-					} else {
-						JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionadas son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				catch (IllegalArgumentException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-	    btnUnirVertices.setBounds(10, 140, 134, 23);
-	    panelControlRelaciones.add(btnUnirVertices);
+                String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();	            
+                String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
+
+                try {
+                    if (!nombreVertice1.equals(nombreVertice2)) {
+                        grafo.agregarArista(nombreVertice1, nombreVertice2);
+                        dibujargrafo(grafo.obtenerMatrizArista());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionados son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        btnUnirVertices.setBounds(10, 140, 134, 23);
+        panelControlRelaciones.add(btnUnirVertices);
+
 	    
 	  //ELIMINAR UNION DE VERTICES
 	    btnEliminarUnion = new JButton("Eliminar arco");
