@@ -153,12 +153,10 @@ public class MainForm
 	        }
 	    });
 	}
-
 	
 	private void dibujarArista(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
-		//Para dibujar una arista entre dos vertices, el objeto MapPolygonImpl requiere unir A con B y luego A nuevamente.
 	    listaCoordenadas.add(coordenadaVertice1);
 	    listaCoordenadas.add(coordenadaVertice2);
 	    listaCoordenadas.add(coordenadaVertice1);
@@ -180,7 +178,7 @@ public class MainForm
 	}
 	
 	private void cargarRelaciones() {
-	    
+		
 	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
 	    lblTituloGrafo.setForeground(new Color(102, 205, 170));
 	    lblTituloGrafo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
@@ -253,7 +251,6 @@ public class MainForm
         });
         btnUnirVertices.setBounds(10, 140, 134, 23);
         panelControlRelaciones.add(btnUnirVertices);
-
 	    
 	  //ELIMINAR UNION DE VERTICES
 	    btnEliminarUnion = new JButton("Eliminar arco");
@@ -344,7 +341,6 @@ public class MainForm
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
-
 		_grafo.removeAllMapPolygons();
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
@@ -362,7 +358,6 @@ public class MainForm
 	            _grafo.removeAllMapPolygons();
 	            grafo.reiniciarGrafo();
 	            
-	            // Vaciar los modelos de las listas desplegables
 	            comboBox_Vertice1.setModel(new DefaultComboBoxModel<>());
 	            comboBox_Vertice2.setModel(new DefaultComboBoxModel<>());
 
