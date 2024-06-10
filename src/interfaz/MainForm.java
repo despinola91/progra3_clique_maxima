@@ -227,6 +227,7 @@ public class MainForm
 	    
         //UNIR VERTICES
         btnUnirVertices = new JButton("Agregar arco");
+        btnUnirVertices.setBackground(new Color(102, 205, 170));
         btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnUnirVertices.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -281,6 +282,8 @@ public class MainForm
 	    // Inicializa el botón de reset aquí
 	    btnReset = new JButton("Reiniciar");
 	    btnReset.setBounds(25, 276, 80, 25);
+	    btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnReset.setBounds(25, 313, 102, 25);
 	    panelControlRelaciones.add(btnReset);
 	    
 	    JLabel lblTituloCliqueMax = new JLabel("Clique Maxima con Golosos");
