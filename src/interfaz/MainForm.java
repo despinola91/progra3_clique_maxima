@@ -121,43 +121,42 @@ public class MainForm
 		reset();
 	}
 	
-	private void detectarCoordenadas() 
-	{	
-		_grafo.addMouseListener(new MouseAdapter() 
-		{
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-			if (e.getButton() == MouseEvent.BUTTON1)
-			{
-				Coordinate coordenadas = (Coordinate)_grafo.getPosition(e.getPoint());
-				String nombre = String.valueOf(grafo.obtenerVertices().size()+1);
-				String tituloDialogo = "Vértice nro " + nombre;
-				String pesoString = JOptionPane.showInputDialog(null, 
-	                    "Peso del vértice (utilizar separación por punto, ej.: 3.5):", 
-	                    tituloDialogo, 
-	                    JOptionPane.PLAIN_MESSAGE);
-				nombre = nombre + " (peso: "+pesoString+")";
-				float peso = Float.parseFloat(pesoString);
+	private void detectarCoordenadas() {	
+	    _grafo.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            if (e.getButton() == MouseEvent.BUTTON1) {
+	                Coordinate coordenadas = (Coordinate) _grafo.getPosition(e.getPoint());
+	                String nombre = String.valueOf(grafo.obtenerVertices().size() + 1);
+	                String tituloDialogo = "Vertice nro " + nombre;
+	                String pesoString = JOptionPane.showInputDialog(null,
+	                        "Peso del vertice (utilizar separación por punto, ej.: 3.5):",
+	                        tituloDialogo,
+	                        JOptionPane.PLAIN_MESSAGE);
 
-				if (nombre != null && !nombre.isEmpty() && peso != 0) {
-					try {
-						grafo.agregarVertice(nombre, coordenadas, peso);
-						_grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
-                    } catch (IllegalArgumentException ex) {
-						JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+	                if (pesoString != null && !pesoString.trim().isEmpty()) {
+	                    try {
+	                        float peso = Float.parseFloat(pesoString);
+	                        nombre = nombre + " (peso: " + pesoString + ")";
 
-					cargarDesplegablesVertices();
-				}
-			}}
-		});
+	                        grafo.agregarVertice(nombre, coordenadas, peso);
+	                        _grafo.addMapMarker(new MapMarkerDot(nombre, coordenadas));
+
+	                        cargarDesplegablesVertices();
+	                    } catch (NumberFormatException ex) {
+	                        JOptionPane.showMessageDialog(null, "Debe ingresar un nemero valido", "Error", JOptionPane.ERROR_MESSAGE);
+	                    } catch (IllegalArgumentException ex) {
+	                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	                    }
+	                }
+	            }
+	        }
+	    });
 	}
 	
 	private void dibujarArista(Coordinate coordenadaVertice1, Coordinate coordenadaVertice2) {
 	    ArrayList<Coordinate> listaCoordenadas = new ArrayList<>();
 	    
-		//Para dibujar una arista entre dos vertices, el objeto MapPolygonImpl requiere unir A con B y luego A nuevamente.
 	    listaCoordenadas.add(coordenadaVertice1);
 	    listaCoordenadas.add(coordenadaVertice2);
 	    listaCoordenadas.add(coordenadaVertice1);
@@ -179,7 +178,7 @@ public class MainForm
 	}
 	
 	private void cargarRelaciones() {
-	    
+		
 	    JLabel lblTituloGrafo = new JLabel("Creacion de Grafo");
 	    lblTituloGrafo.setForeground(new Color(102, 205, 170));
 	    lblTituloGrafo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
@@ -223,32 +222,35 @@ public class MainForm
         comboBox_Criterio.addItem("Grado");
 	    
         //UNIR VERTICES
-	    btnUnirVertices = new JButton("Agregar arco");
-	    btnUnirVertices.setBackground(new Color(102, 205, 170));
-	    btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnUnirVertices.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();	            
-				String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
+        btnUnirVertices = new JButton("Agregar arco");
+        btnUnirVertices.setBackground(new Color(102, 205, 170));
+        btnUnirVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnUnirVertices.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (comboBox_Vertice1.getSelectedItem() == null || comboBox_Vertice2.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(null, "Deben haber vertices para seleccionar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-				try {
-					if (!nombreVertice1.equals(nombreVertice2)) {
-						grafo.agregarArista(nombreVertice1, nombreVertice2);
-						dibujargrafo(grafo.obtenerMatrizArista());
-					} else {
-						JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionadas son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				catch (IllegalArgumentException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-	    btnUnirVertices.setBounds(10, 140, 134, 23);
-	    panelControlRelaciones.add(btnUnirVertices);
+                String nombreVertice1 = comboBox_Vertice1.getSelectedItem().toString();	            
+                String nombreVertice2 = comboBox_Vertice2.getSelectedItem().toString();
+
+                try {
+                    if (!nombreVertice1.equals(nombreVertice2)) {
+                        grafo.agregarArista(nombreVertice1, nombreVertice2);
+                        dibujargrafo(grafo.obtenerMatrizArista());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Los dos Vertices seleccionados son iguales, por favor seleccione Vertices diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        btnUnirVertices.setBounds(10, 140, 134, 23);
+        panelControlRelaciones.add(btnUnirVertices);
 	    
 	  //ELIMINAR UNION DE VERTICES
 	    btnEliminarUnion = new JButton("Eliminar arco");
@@ -274,8 +276,8 @@ public class MainForm
 	    
 	    // Inicializa el botón de reset aquí
 	    btnReset = new JButton("Reiniciar");
-	    btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    btnReset.setBounds(25, 313, 102, 25);
+		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnReset.setBounds(25, 313, 102, 25);
 	    panelControlRelaciones.add(btnReset);
 	    
 	    JLabel lblTituloCliqueMax = new JLabel("Clique Maxima con Golosos");
@@ -338,7 +340,6 @@ public class MainForm
 	}
 
 	private void dibujargrafo(int[][] matrizDeRelacion) {
-
 		_grafo.removeAllMapPolygons();
 		for (int i = 0; i < matrizDeRelacion.length; i++) {
 			for (int j = 0; j < matrizDeRelacion.length; j++) {  
@@ -356,7 +357,6 @@ public class MainForm
 	            _grafo.removeAllMapPolygons();
 	            grafo.reiniciarGrafo();
 	            
-	            // Vaciar los modelos de las listas desplegables
 	            comboBox_Vertice1.setModel(new DefaultComboBoxModel<>());
 	            comboBox_Vertice2.setModel(new DefaultComboBoxModel<>());
 
