@@ -57,7 +57,7 @@ public class Vertice {
     public int obtenerGrado() {
         return _vecinos.size();
     }
-    
+
     public void agregarVecino(Vertice vertice) {
         _vecinos.add(vertice);
     }

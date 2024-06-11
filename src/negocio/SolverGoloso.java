@@ -10,12 +10,21 @@ public class SolverGoloso {
 	private Comparator<Vertice> _comparador;
 	private GeneradorRandom _random;
 	
+	/**
+	 * Instancia nuevo solver goloso en base a un grafo y comparador
+	 * @param grafo
+	 * @param comparador
+	 */
 	public SolverGoloso(Grafo grafo, Comparator<Vertice> comparador)
 	{
 		_grafo = grafo;
 		_comparador = comparador;
 	}
 	
+	/**
+	 * Resuelve aplicando el algoritmo goloso
+	 * @return clique resultante del algoritmo
+	 */
 	public Clique resolver()
 	{
 		Clique clique = new Clique();
@@ -33,6 +42,10 @@ public class SolverGoloso {
 		return clique;
 	}
 
+	/**
+	 * Resuelve aplicando el algoritmo goloso contemplando un elemento random en el proceso
+	 * @return clique resultante del algoritmo
+	 */
 	public Clique resolverConElementoRandom()
 	{
 		Clique clique = new Clique();
@@ -50,6 +63,10 @@ public class SolverGoloso {
 		return clique;
 	}
 
+	/**
+	 * Ordena los vertices del grafo en base al criterio del comparador
+	 * @return lista de vértices ordenados bajo el criterio del comparador
+	 */
 	private ArrayList<Vertice> verticesOrdenados()
 	{
 		ArrayList<Vertice> vertices = _grafo.obtenerVertices();
@@ -57,7 +74,11 @@ public class SolverGoloso {
 		
 		return vertices;
 	}
-
+	
+	/**
+	 * Ordena los vertices del grafo en base al criterio del comparador y se contempla un factor random
+	 * @return lista de vértices ordenados bajo el criterio del comparador y un factor random
+	 */
 	private ArrayList<Vertice> verticesOrdenadosConElementoRandom()
 	{
 		ArrayList<Vertice> vertices = _grafo.obtenerVertices();

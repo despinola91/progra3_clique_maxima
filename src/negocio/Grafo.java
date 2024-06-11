@@ -161,9 +161,6 @@ public class Grafo {
      * @return  lista de vertices agregadas al grafo.
      */
     public ArrayList<Vertice> obtenerVertices() {
-        // ArrayList<String> listaVertices = new ArrayList<>();
-        // listaVertices.addAll(vertices.keySet());
-        // Collections.sort(listaVertices);
         return _vertices;
     }
 
