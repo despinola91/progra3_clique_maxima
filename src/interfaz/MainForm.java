@@ -211,7 +211,7 @@ public class MainForm
 	    
 	    JLabel lblCriterio = new JLabel("Criterio");
 	    lblCriterio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	    lblCriterio.setBounds(26, 231, 46, 14);
+	    lblCriterio.setBounds(26, 231, 101, 14);
 	    panelControlRelaciones.add(lblCriterio);
     
         JComboBox<String> comboBox_Criterio = new JComboBox<String>();
